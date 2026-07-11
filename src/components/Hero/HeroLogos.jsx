@@ -155,8 +155,8 @@ export default function HeroLogos({
           <div
             className="flex items-center justify-center rounded-[16px] sm:rounded-[22px] relative overflow-hidden transition-all duration-500"
             style={{
-              width: isMobile ? 130 : 200,
-              height: isMobile ? 42 : 58,
+              width: isMobile ? 130 : 250,
+              height: isMobile ? 42 : 74,
               background: leftHovered 
                 ? 'linear-gradient(135deg, rgba(15, 12, 10, 0.60) 0%, rgba(232, 200, 138, 0.12) 50%, rgba(8, 6, 5, 0.70) 100%)' 
                 : 'linear-gradient(135deg, rgba(15, 12, 10, 0.70) 0%, rgba(232, 200, 138, 0.08) 50%, rgba(8, 6, 5, 0.80) 100%)',
@@ -229,8 +229,8 @@ export default function HeroLogos({
           <div
             className="flex items-center justify-center rounded-[16px] sm:rounded-[22px] relative overflow-hidden transition-all duration-500"
             style={{
-              width: isMobile ? 74 : 100,
-              height: isMobile ? 42 : 58,
+              width: isMobile ? 74 : 125,
+              height: isMobile ? 42 : 74,
               background: rightHovered 
                 ? 'linear-gradient(135deg, rgba(15, 12, 10, 0.60) 0%, rgba(232, 200, 138, 0.12) 50%, rgba(8, 6, 5, 0.70) 100%)' 
                 : 'linear-gradient(135deg, rgba(15, 12, 10, 0.70) 0%, rgba(232, 200, 138, 0.08) 50%, rgba(8, 6, 5, 0.80) 100%)',
