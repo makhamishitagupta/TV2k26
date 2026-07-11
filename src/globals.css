@@ -55,7 +55,7 @@
 
 html, body {
   background-color: #170709;
-  color: #E2E8F0;
+  color: #eae3d2;
   font-family: 'Switzer', sans-serif;
   scroll-behavior: smooth;
   overflow-x: clip;
@@ -80,24 +80,26 @@ a:focus-visible,
 
 /* Glassmorphism Styles */
 .glass-panel {
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(23, 7, 9, 0.65); /* Burgundy glass */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(217, 4, 11, 0.15);
+  border: 1px solid rgba(243, 229, 202, 0.08); /* Warm gold border */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
 }
 
 .glass-card {
-  background: rgba(18, 18, 24, 0.6);
+  background: rgba(29, 8, 11, 0.45); /* Burgundy glass card */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(243, 229, 202, 0.06); /* Warm gold border */
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: auto;
 }
 
 .glass-card:hover {
-  border-color: var(--card-hover-border, rgba(255, 255, 255, 0.20));
-  box-shadow: 0 0 35px var(--card-hover-glow, rgba(255, 255, 255, 0.08)), inset 0 0 12px var(--card-hover-inner, rgba(255, 255, 255, 0.04));
+  border-color: var(--card-hover-border, rgba(243, 229, 202, 0.18));
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.02);
+  transform: translateY(-2px); /* Soft premium hover elevation */
 }
 
 /* Hologram Effects */

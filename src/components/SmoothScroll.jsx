@@ -9,8 +9,8 @@ export default function SmoothScroll({ children }) {
     <ReactLenis
       root
       options={{
-        lerp: 0.08,
-        duration: 1.2,
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Premium organic exponential scroll physics
         smoothWheel: true,
       }}
     >

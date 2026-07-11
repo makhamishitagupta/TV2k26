@@ -80,24 +80,28 @@ export default function HeroLogos({
           onMouseLeave={() => setLeftHovered(false)}
         >
           <div
-            className="flex items-center justify-center rounded-[22px] relative overflow-hidden"
+            className="flex items-center justify-center rounded-[22px] relative overflow-hidden transition-all duration-500"
             style={{
               width: 280,
               height: 90,
-              backgroundColor: leftHovered ? 'rgba(20, 16, 14, 0.65)' : 'rgba(20, 16, 14, 0.80)', // Slightly lighter/more opaque smoked glass
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              boxShadow: '0 12px 32px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.08)', // High-contrast shadows
+              background: leftHovered 
+                ? 'linear-gradient(135deg, rgba(15, 12, 10, 0.60) 0%, rgba(232, 200, 138, 0.12) 50%, rgba(8, 6, 5, 0.70) 100%)' 
+                : 'linear-gradient(135deg, rgba(15, 12, 10, 0.70) 0%, rgba(232, 200, 138, 0.08) 50%, rgba(8, 6, 5, 0.80) 100%)',
+              backdropFilter: 'blur(18px)',
+              WebkitBackdropFilter: 'blur(18px)',
+              border: leftHovered ? '1px solid rgba(232, 200, 138, 0.18)' : '1px solid rgba(232, 200, 138, 0.08)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25), 0 12px 32px rgba(0, 0, 0, 0.40), inset 0 1px 1px rgba(255, 255, 255, 0.05)',
             }}
           >
+            {/* Soft vertical reflection */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
+
             <motion.div
               animate={{
                 y: [0, -3, 0],
-                opacity: [0.9, 1, 0.9],
               }}
               transition={{
-                y: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
-                opacity: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+                y: { duration: 12.0, repeat: Infinity, ease: 'easeInOut' },
               }}
               className="w-full h-full flex items-center justify-center"
             >
@@ -150,24 +154,28 @@ export default function HeroLogos({
           onMouseLeave={() => setRightHovered(false)}
         >
           <div
-            className="flex items-center justify-center rounded-[22px] relative overflow-hidden"
+            className="flex items-center justify-center rounded-[22px] relative overflow-hidden transition-all duration-500"
             style={{
               width: 140,
               height: 90,
-              backgroundColor: rightHovered ? 'rgba(20, 16, 14, 0.65)' : 'rgba(20, 16, 14, 0.80)', // Slightly lighter/more opaque smoked glass
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              boxShadow: '0 12px 32px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
+              background: rightHovered 
+                ? 'linear-gradient(135deg, rgba(15, 12, 10, 0.60) 0%, rgba(232, 200, 138, 0.12) 50%, rgba(8, 6, 5, 0.70) 100%)' 
+                : 'linear-gradient(135deg, rgba(15, 12, 10, 0.70) 0%, rgba(232, 200, 138, 0.08) 50%, rgba(8, 6, 5, 0.80) 100%)',
+              backdropFilter: 'blur(18px)',
+              WebkitBackdropFilter: 'blur(18px)',
+              border: rightHovered ? '1px solid rgba(232, 200, 138, 0.18)' : '1px solid rgba(232, 200, 138, 0.08)',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25), 0 12px 32px rgba(0, 0, 0, 0.40), inset 0 1px 1px rgba(255, 255, 255, 0.05)',
             }}
           >
+            {/* Soft vertical reflection */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
+
             <motion.div
               animate={{
                 y: [0, -3, 0],
-                opacity: [0.9, 1, 0.9],
               }}
               transition={{
-                y: { duration: 6.5, repeat: Infinity, ease: 'easeInOut' },
-                opacity: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' },
+                y: { duration: 12.0, repeat: Infinity, ease: 'easeInOut' },
               }}
               className="w-full h-full flex items-center justify-center"
             >
@@ -176,8 +184,8 @@ export default function HeroLogos({
                 alt="Data Questers Logo"
                 className="w-32 h-20 object-contain select-none transition-all duration-300"
                 style={{
-                  // Silhouetted white inversion for maximum readability (opacity raised to 0.95 default)
-                  filter: rightHovered ? 'brightness(0) invert(1) opacity(1.0)' : 'brightness(0) invert(1) opacity(0.95)',
+                  // Restored original brand colors with slight saturation & contrast reduction to harmonize
+                  filter: rightHovered ? 'saturate(0.85) brightness(1.0) contrast(1.0)' : 'saturate(0.70) brightness(0.90) contrast(0.95)',
                   transition: 'filter 0.4s ease, opacity 0.4s ease',
                   willChange: 'filter, opacity',
                 }}

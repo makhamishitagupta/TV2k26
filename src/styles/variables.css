@@ -16,12 +16,12 @@
   --surface: #2A0A0F;      /* Deep Maroon Surface */
   --surface-elevated: #3B0E12; /* Elevated Maroon Surface */
   
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #eae3d2; /* Soft Ivory */
+  --text-secondary: rgba(234, 227, 210, 0.70); /* Muted Ivory */
+  --text-muted: rgba(234, 227, 210, 0.45); /* Muted Ivory Dark */
   
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-color-hover: rgba(255, 255, 255, 0.15);
+  --border-color: rgba(243, 229, 202, 0.08); /* Warm gold border */
+  --border-color-hover: rgba(243, 229, 202, 0.18); /* Warm gold border hover */
 
   /* Font bindings */
   --font-heading: 'Outfit', 'Manrope', 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
@@ -32,16 +32,16 @@
 /* Contextual Theme Accent Updates */
 [data-theme="explore"] {
   --accent: var(--accent-day1);
-  --accent-glow: rgba(255, 255, 255, 0.05);
+  --accent-glow: rgba(217, 4, 11, 0.12);
 }
 
 [data-theme="create"] {
   --accent: var(--accent-day2);
-  --accent-glow: rgba(255, 255, 255, 0.05);
+  --accent-glow: rgba(217, 4, 11, 0.12);
 }
 
 [data-theme="celebrate"] {
   --accent: var(--accent-day3);
-  --accent-glow: rgba(255, 255, 255, 0.05);
+  --accent-glow: rgba(217, 4, 11, 0.12);
 }
 

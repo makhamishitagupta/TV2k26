@@ -19,7 +19,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "MISSION COMMAND 2K26 | Avengers Command Center";
+    document.title = "TECHNOVISTA 2K26 | VJ Data Questers";
     if (typeof window !== "undefined") {
       const hasShownIntro = window.__hasShownIntro;
       if (hasShownIntro) {
@@ -77,7 +77,7 @@ export default function Home() {
                 {/* Main content - only render when loading finishes */}
                 {!isLoading && (
                   <div className="relative z-10">
-                    {/* Content above global gradient — no section-specific backgrounds */}
+                    {/* Relative container to keep content above background glows */}
                     <div className="relative z-10">
                       <HeroSection />
                       <EventHub />

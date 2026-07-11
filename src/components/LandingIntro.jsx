@@ -44,7 +44,7 @@ export default function LandingIntro({ onComplete }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] bg-[#000000] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[100] bg-[#170709] flex flex-col items-center justify-center overflow-hidden"
         >
           {/* Fullscreen Portal Video Intro */}
           <video
@@ -76,10 +76,10 @@ export default function LandingIntro({ onComplete }) {
                   }}
                   className="flex flex-col items-center justify-center text-center px-4 -translate-x-4 sm:-translate-x-6 md:-translate-x-8"
                 >
-                  <h1 className="font-boska font-black text-5xl sm:text-8xl md:text-[5rem] leading-none tracking-wider text-[#850307] drop-shadow-[0_0_35px_rgba(133,3,7,0.75)] uppercase">
+                  <h1 className="font-boska font-black text-3xl sm:text-7xl md:text-[5rem] leading-none tracking-wider text-[#d9040b] drop-shadow-[0_0_35px_rgba(217,4,11,0.75)] uppercase">
                     VJ DATA QUESTERS
                   </h1>
-                  <h1 className="font-boska font-black text-5xl sm:text-8xl md:text-[3rem] leading-none tracking-widest text-[#850307] drop-shadow-[0_0_35px_rgba(133,3,7,0.75)] mt-4">
+                  <h1 className="font-boska font-black text-2xl sm:text-5xl md:text-[3rem] leading-none tracking-widest text-[#d9040b] drop-shadow-[0_0_35px_rgba(217,4,11,0.75)] mt-4">
                     Presents
                   </h1>
                   {/* <motion.p

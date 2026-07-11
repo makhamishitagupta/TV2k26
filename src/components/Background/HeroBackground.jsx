@@ -67,6 +67,42 @@ export default function HeroBackground({ delay = 0.3, accent, animateState = 'hi
           className="absolute bottom-0 left-0 right-0 h-[45vh] pointer-events-none opacity-[0.08]"
           style={{ background: 'linear-gradient(to right, rgba(90, 26, 25, 0.6), rgba(59, 14, 18, 0.8), rgba(42, 10, 15, 0.6))' }}
         />
+
+        {/* Layer 3: Ambient Fog / Haze (Drifting radial clouds with extremely low opacities to be subtle) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-60">
+          <motion.div
+            className="absolute -top-[20%] -left-[20%] w-[90vw] h-[90vw] rounded-full blur-[150px]"
+            style={{
+              background: `radial-gradient(circle, ${accent || '#d9040b'}04 0%, transparent 70%)`,
+              willChange: 'transform',
+            }}
+            animate={{
+              x: [0, 50, -30, 0],
+              y: [0, -40, 30, 0],
+            }}
+            transition={{
+              duration: 28,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          <motion.div
+            className="absolute -bottom-[25%] -right-[20%] w-[100vw] h-[100vw] rounded-full blur-[180px]"
+            style={{
+              background: 'radial-gradient(circle, rgba(255, 201, 88, 0.02) 0%, transparent 70%)',
+              willChange: 'transform',
+            }}
+            animate={{
+              x: [0, -60, 40, 0],
+              y: [0, 50, -40, 0],
+            }}
+            transition={{
+              duration: 35,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </div>
       </div>
 
       {/* 2. Subtle Noise Texture Overlay (film grain for depth) */}

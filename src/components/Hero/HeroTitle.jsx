@@ -29,22 +29,21 @@ export default function HeroTitle({
 
   const sceneProgress = useHeroScroll();
 
-  // Scroll scene transforms
-  // Title: TranslateY 0 -> -150px, Scale 1 -> 0.90, Opacity 1 -> 0.95 until 70% progress, then 0.95 -> 0 from 70% to 85%.
-  const titleY = useTransform(sceneProgress, [0, 0.85], [0, isMobile ? 0 : -150]);
-  const titleScale = useTransform(sceneProgress, [0, 0.85], [1, isMobile ? 1 : 0.90]);
-  const titleOpacity = useTransform(sceneProgress, [0, 0.65, 0.85], [1, 1, isMobile ? 1 : 0]);
-  const titlePointerEvents = useTransform(sceneProgress, (p) => p > 0.85 ? (isMobile ? 'auto' : 'none') : 'auto');
+  // Scroll scene transforms (adjusted for both desktop and mobile)
+  const titleY = useTransform(sceneProgress, [0, 0.36], [0, isMobile ? -40 : -150]);
+  const titleScale = useTransform(sceneProgress, [0, 0.36], [1, isMobile ? 0.96 : 0.90]);
+  const titleOpacity = useTransform(sceneProgress, [0, 0.10, 0.36], [1, 1, 0]);
+  const titlePointerEvents = useTransform(sceneProgress, (p) => p > 0.36 ? 'none' : 'auto');
 
-  // Supporting Text: Y 0 -> -85px, Opacity 1 -> 0 (between 0 and 0.80), starts fading at 0.55
-  const textY = useTransform(sceneProgress, [0, 0.80], [0, isMobile ? 0 : -85]);
-  const textOpacity = useTransform(sceneProgress, [0, 0.55, 0.80], [1, 1, isMobile ? 1 : 0]);
-  const textPointerEvents = useTransform(sceneProgress, (p) => p > 0.80 ? (isMobile ? 'auto' : 'none') : 'auto');
+  // Supporting Text: Y and fade with proportional mobile distances
+  const textY = useTransform(sceneProgress, [0, 0.30], [0, isMobile ? -25 : -85]);
+  const textOpacity = useTransform(sceneProgress, [0, 0.08, 0.30], [1, 1, 0]);
+  const textPointerEvents = useTransform(sceneProgress, (p) => p > 0.30 ? 'none' : 'auto');
 
-  // CTA Buttons: Y 0 -> -100px, Opacity 1 -> 0 (between 0 and 0.80), starts fading at 0.55
-  const buttonsY = useTransform(sceneProgress, [0, 0.80], [0, isMobile ? 0 : -100]);
-  const buttonsOpacity = useTransform(sceneProgress, [0, 0.55, 0.80], [1, 1, isMobile ? 1 : 0]);
-  const buttonsPointerEvents = useTransform(sceneProgress, (p) => p > 0.80 ? (isMobile ? 'auto' : 'none') : 'auto');
+  // CTA Buttons: Y and fade with proportional mobile distances
+  const buttonsY = useTransform(sceneProgress, [0, 0.30], [0, isMobile ? -30 : -100]);
+  const buttonsOpacity = useTransform(sceneProgress, [0, 0.08, 0.30], [1, 1, 0]);
+  const buttonsPointerEvents = useTransform(sceneProgress, (p) => p > 0.30 ? 'none' : 'auto');
 
   const titleVariants = {
     hidden: { opacity: 0 },
@@ -101,7 +100,7 @@ export default function HeroTitle({
       }
     } else {
       window.scrollTo({
-        top: vh * 1.42,
+        top: vh * 0.95,
         behavior: 'smooth'
       });
     }
@@ -113,7 +112,7 @@ export default function HeroTitle({
     <div className="flex flex-col items-center text-center relative z-10 w-full">
       {/* Subtle background colored glow matching active day theme */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-10 w-[450px] sm:w-[650px] h-[130px] rounded-full blur-[80px]"
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-10 rounded-full blur-[80px] ${isMobile ? 'w-[300px] h-[100px]' : 'w-[450px] sm:w-[650px] h-[130px]'}`}
         style={{
           background: `radial-gradient(circle, ${accent}25 0%, transparent 80%)`,
           opacity: 0.75,
@@ -129,7 +128,7 @@ export default function HeroTitle({
           animate={animateState}
         >
           <motion.h1
-            className="editorial-title-lg tv-hero-title mb-4 sm:mb-6 max-w-5xl select-none text-center"
+            className={`editorial-title-lg tv-hero-title max-w-5xl select-none text-center ${isMobile ? 'mb-2.5' : 'mb-6'}`}
             style={{
               fontWeight: 800, // ExtraBold weight
             }}
@@ -149,17 +148,7 @@ export default function HeroTitle({
                 <motion.span
                   key={index}
                   variants={letterVariants}
-                  whileHover={{
-                    y: -6,
-                    scale: 1.12,
-                    textShadow: '0 0 10px rgba(255, 255, 255, 0.4)',
-                  }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 350,
-                    damping: 14
-                  }}
-                  className="inline-block cursor-default text-clip-gradient"
+                  className="inline-block cursor-default text-clip-gradient transition-all duration-300"
                   style={{
                     display: 'inline-block',
                     backgroundImage: 'inherit',
@@ -187,8 +176,8 @@ export default function HeroTitle({
             duration: isTransitioning ? 0.7 : 1.0,
             ease: 'easeInOut'
           }}
-          className="text-[11px] sm:text-xs font-sans tracking-widest leading-relaxed uppercase max-w-xl mb-8 sm:mb-10 select-none font-semibold px-4 text-center"
-          style={{ color: '#C8D0DF' }}
+          className={`text-[10.5px] sm:text-xs font-sans tracking-widest leading-relaxed uppercase max-w-xl select-none font-normal px-6 text-center ${isMobile ? 'mb-6' : 'mb-10'}`}
+          style={{ color: 'rgba(255, 255, 255, 0.45)' }}
         >
           A High-Fidelity National Level Tech Symposium hosted by Department of Information Technology at VNR VJIET.
         </motion.p>
@@ -208,28 +197,29 @@ export default function HeroTitle({
             duration: isTransitioning ? 0.7 : 1.0,
             ease: 'easeInOut'
           }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
+          className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center justify-center ${isMobile ? 'gap-3 w-full px-6' : 'gap-4 sm:gap-6'}`}
         >
-          {/* Primary CTA — Register Now (Opaque Metallic Brass Gradient with White/Amber highlights) */}
+          {/* Primary CTA — Register Now (Opaque Metallic Champagne Gold Gradient with Layered Shadows) */}
           <motion.a
             href="https://forms.gle/technovista2026-register" // Placeholder registration link
             target="_blank"
             rel="noopener noreferrer"
             whileHover="hover"
-            className="group relative px-8.5 py-3.5 border font-heading font-semibold tracking-[0.16em] uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center"
+            whileTap={{ scale: 0.97, y: 0 }}
+            className={`group relative border font-heading font-semibold tracking-[0.16em] uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black ${isMobile ? 'w-full px-6 py-4 min-h-[50px]' : 'px-8.5 py-3.5'}`}
             style={{
-              background: 'linear-gradient(135deg, #d4b26f 0%, #a37c3f 100%)', // Polished brass gradient (low saturation gold)
-              borderColor: 'rgba(255, 201, 88, 0.40)', // Amber border outline
-              color: '#0a0805', // High-contrast dark charcoal text
-              boxShadow: '0 4px 14px rgba(163, 124, 63, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.40)',
+              background: 'linear-gradient(135deg, #f3e5ca 0%, #d8b26e 50%, #9a7538 100%)', // Rich metallic champagne gold
+              borderColor: 'rgba(243, 229, 202, 0.35)', // Light champagne gold outline
+              color: '#080604', // Dark charcoal text
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.20), 0 8px 18px rgba(154, 117, 56, 0.25), inset 0 1px 1.5px rgba(255, 255, 255, 0.60)',
               transition: 'background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease',
             }}
             variants={{
               hover: {
                 y: -2, // Lift by exactly 2px
                 borderColor: '#ffffff', // High-visibility white border on hover
-                background: 'linear-gradient(135deg, #e5c483 0%, #b88d4c 100%)', // Elevated polished brass
-                boxShadow: '0 8px 22px rgba(163, 124, 63, 0.35), inset 0 1px 1.5px rgba(255, 255, 255, 0.50)',
+                background: 'linear-gradient(135deg, #f6ebd7 0%, #e0c286 50%, #ad8444 100%)', // Slightly brighter champagne sheen
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 14px 28px rgba(154, 117, 56, 0.40), inset 0 1px 2px rgba(255, 255, 255, 0.80)',
               }
             }}
           >
@@ -264,28 +254,30 @@ export default function HeroTitle({
             />
           </motion.a>
 
-          {/* Secondary CTA — Conclave Info (Secondary: Dark glass, thin border, minimal hover lighting) */}
+          {/* Secondary CTA — Conclave Info (Translucent Glass Panel treatment) */}
           <motion.a
             href="#about"
             onClick={handleExploreClick}
             whileHover="hover"
-            className="group relative px-8.5 py-3.5 border font-heading font-semibold uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center"
+            whileTap={{ scale: 0.97, y: 0 }}
+            className={`group relative border font-heading font-semibold uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-black ${isMobile ? 'w-full px-6 py-4 min-h-[50px]' : 'px-8.5 py-3.5'}`}
             style={{
-              backgroundColor: 'rgba(31, 24, 20, 0.55)', // Espresso-smoked glass matching logos
-              borderColor: 'rgba(255, 255, 255, 0.05)', // Subtle border outline
+              backgroundColor: 'rgba(255, 255, 255, 0.03)', // Translucent glass
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              borderColor: 'rgba(255, 248, 235, 0.08)', // Faint warm inner border
               color: '#ffffff', // White text
               letterSpacing: '0.16em', // Base spacing
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.05)',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.20), inset 0 1px 1px rgba(255, 255, 255, 0.05)',
               transition: 'background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease',
             }}
             variants={{
               hover: {
                 y: -2, // Lift by exactly 2px
-                letterSpacing: '0.21em', // Slowly increase letter spacing on hover
-                borderColor: 'rgba(255, 201, 88, 0.35)', // Tint with soft amber outline
-                backgroundColor: 'rgba(31, 24, 20, 0.30)', // Smoked glass clarity hover
+                borderColor: 'rgba(243, 229, 202, 0.25)', // Subtle warm border highlight
+                backgroundColor: 'rgba(255, 255, 255, 0.08)', // Brighter glass
                 color: '#ffffff',
-                boxShadow: '0 8px 20px rgba(255, 201, 88, 0.08), 0 10px 24px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.08)',
+                boxShadow: '0 4px 12px rgba(243, 229, 202, 0.05), 0 8px 24px rgba(0, 0, 0, 0.30), inset 0 1px 1px rgba(255, 255, 255, 0.12)',
               }
             }}
           >

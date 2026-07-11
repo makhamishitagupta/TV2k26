@@ -28,8 +28,8 @@ const eventRegistry = {
     tagline: "Build the Future in 24 Hours.",
     desc: "Deploy your programming armor. Stark Industries needs operatives to engineer real-time application matrices. You have 24 hours to design, construct, and deploy a working system that addresses critical energy grid or planetary defense parameters.",
     modelId: "69dde1ad49e94852984e3d83928efd65",
-    accentColor: "#A11217", // Rich Red
-    glowColor: "rgba(161, 18, 23, 0.45)",
+    accentColor: "#d9040b", // Stark Crimson Red
+    glowColor: "rgba(217, 4, 11, 0.45)",
     textColor: "#ffffff",
     difficulty: "THREAT LEVEL: OMEGA",
     teamSize: "2 - 4 Operatives",
@@ -47,8 +47,8 @@ const eventRegistry = {
     tagline: "We saw 14,005 futures. Build the best model.",
     desc: "Step inside the Sanctum Sanctorum neural networks. Predict complex outcomes, parse multi-dimensional anomalies, and develop machine learning models to secure the space-time fabric. You are tasked with analyzing raw high-dimensional dataset matrices to secure the optimum future path.",
     modelId: "f236e1da1b574a98bb6466b9d4e7e20c",
-    accentColor: "#FF6D00", // Strange Orange
-    glowColor: "rgba(255, 109, 0, 0.45)",
+    accentColor: "#f59e0b", // Mystic Amber Gold
+    glowColor: "rgba(245, 158, 11, 0.45)",
     textColor: "#ffffff",
     difficulty: "THREAT LEVEL: ALPHA",
     teamSize: "1 - 3 Operatives",
@@ -66,8 +66,8 @@ const eventRegistry = {
     tagline: "Every Bug Has a Weakness.",
     desc: "Stark Tower's primary core has been compromised. The firewall contains critical memory leaks, dangling pointer chains, and syntax errors. Navigate through the code web, identify structural defects, and patch the matrix before the system shuts down.",
     modelId: "11258609738d479abd4af04bd6c8c1b8",
-    accentColor: "#1976D2", // Spidey Blue
-    glowColor: "rgba(25, 118, 210, 0.45)",
+    accentColor: "#b71c1c", // Spidey Scarlet Crimson
+    glowColor: "rgba(183, 28, 28, 0.45)",
     textColor: "#ffffff",
     difficulty: "THREAT LEVEL: BETA",
     teamSize: "1 - 2 Operatives",
@@ -85,8 +85,8 @@ const eventRegistry = {
     tagline: "Wakanda Forever. Code Forever.",
     desc: "Access the secure Wakandan database hubs. This is a security capture-the-flag (CTF) operation. Crack encryption matrices, decode raw vibrations telemetry logs, and capture key files from vibranium repositories without triggering alarm nodes.",
     modelId: "9c33cfe0a90f4e9f8c318a5b6ad63988",
-    accentColor: "#9C27B0", // Wakanda Purple
-    glowColor: "rgba(156, 39, 176, 0.45)",
+    accentColor: "#e8c88a", // Vibranium Antique Gold
+    glowColor: "rgba(232, 200, 138, 0.45)",
     textColor: "#ffffff",
     difficulty: "THREAT LEVEL: ALPHA",
     teamSize: "1 - 2 Operatives",
@@ -104,8 +104,8 @@ const eventRegistry = {
     tagline: "Write Code Worthy of Mjolnir.",
     desc: "A pure test of algorithmic muscle. Compete in a rapid sequence of competitive programming challenges. Write code that maximizes space-time efficiency, handles extreme input buffers, and demonstrates logic worthy of Mjolnir.",
     modelId: "24b558bda86f41f19fa45ff3f6056273",
-    accentColor: "#00E5FF", // Thor Lightning Blue
-    glowColor: "rgba(0, 229, 255, 0.45)",
+    accentColor: "#d97706", // Mjolnir Bright Amber
+    glowColor: "rgba(217, 119, 6, 0.45)",
     textColor: "#ffffff",
     difficulty: "THREAT LEVEL: OMEGA",
     teamSize: "1 - 2 Operatives",
@@ -123,8 +123,8 @@ const eventRegistry = {
     tagline: "Learn from the Legends.",
     desc: "Assemble for strategic briefings. Gain insights from the directors of systems engineering and cybersecurity operatives. Learn about next-generation command networks, scalable software architectures, and security protocols.",
     modelId: "f1ef32ced357429ab4ea9c6e971e77eb",
-    accentColor: "#0D47A1", // Cap Blue
-    glowColor: "rgba(13, 71, 161, 0.45)",
+    accentColor: "#9f1239", // Shield Crimson Rose
+    glowColor: "rgba(159, 18, 57, 0.45)",
     textColor: "#ffffff",
     difficulty: "CLEARANCE: ALL AGENCIES",
     teamSize: "Open Access",
@@ -195,20 +195,31 @@ export default function EventDetail() {
 
   useEffect(() => {
     if (event) {
-      document.title = `${event.name} | Avengers Command Center`;
+      document.title = `${event.name} | TechnoVista 2K26`;
     } else {
-      document.title = "404 // Clearance Level Exceeded | Avengers Command Center";
+      document.title = "404 // Clearance Level Exceeded | TechnoVista 2K26";
     }
   }, [event]);
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-[#000000] flex flex-col items-center justify-center text-center px-6 font-switzer">
-        <h1 className="font-stardom text-4xl text-red-500 mb-4">404 // CLEARANCE LEVEL EXCEEDED</h1>
-        <p className="text-gray-400 text-sm max-w-sm mb-8">
-          The requested mission coordinate does not exist or has been locked by Stark security protocols.
+      <div className="min-h-screen bg-[#170709] flex flex-col items-center justify-center text-center px-6 font-switzer">
+        <h1 className="font-heading text-4xl font-black text-[#d9040b] mb-4">404 // CLEARANCE LEVEL EXCEEDED</h1>
+        <p className="text-[#eae3d2b3] text-sm max-w-sm mb-8">
+          The requested mission coordinate does not exist or has been locked by security protocols.
         </p>
-        <Link to="/" className="px-6 py-3 rounded-full bg-red-500/10 border border-red-500 text-red-400 font-stardom text-xs uppercase tracking-wider hover:bg-red-500 hover:text-black transition-all">
+        <Link 
+          to="/" 
+          className="group relative px-6 py-3 border font-heading font-semibold uppercase text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.03)',
+            backdropFilter: 'blur(16px)',
+            borderColor: 'rgba(255, 248, 235, 0.08)',
+            color: '#eae3d2',
+            letterSpacing: '0.16em',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.20)',
+          }}
+        >
           Return to Command Center
         </Link>
       </div>
@@ -257,7 +268,7 @@ export default function EventDetail() {
   return (
     <SmoothScroll>
       <div 
-        className="relative min-h-screen bg-[#090B10] text-[#E2E8F0] overflow-hidden"
+        className="relative min-h-screen bg-[#170709] text-[#eae3d2] overflow-hidden"
         style={{
           "--card-hover-border": `${event.accentColor}66`,
           "--card-hover-glow": event.glowColor,
@@ -273,19 +284,19 @@ export default function EventDetail() {
         <div className="absolute inset-0 bg-radar opacity-[0.03] pointer-events-none" />
 
         {/* 1. Header Navigation */}
-        <header className="absolute top-0 left-0 w-full z-30 py-6 border-b border-white/5 bg-gradient-to-b from-[#000000] to-transparent">
+        <header className="absolute top-0 left-0 w-full z-30 py-6 border-b border-[rgba(243,229,202,0.06)] bg-transparent">
           <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <Magnetic pullStrength={0.2}>
               <button 
                 onClick={handleBack}
-                className="flex items-center gap-2 font-stardom text-xs uppercase tracking-widest text-gray-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 font-heading font-semibold text-xs uppercase tracking-widest text-[#eae3d2b3] hover:text-[#eae3d2] transition-colors"
               >
                 <RiArrowLeftLine className="text-sm" />
                 Dossier Archives
               </button>
             </Magnetic>
 
-            <span className="font-mono text-[9px] tracking-wider uppercase" style={{ color: event.accentColor }}>
+            <span className="font-mono text-[9px] tracking-wider uppercase hidden sm:inline" style={{ color: event.accentColor }}>
               DECRYPTED // {event.theme.toUpperCase()}_NET
             </span>
           </div>
@@ -299,9 +310,9 @@ export default function EventDetail() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 0.75, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="font-stardom text-xs sm:text-sm tracking-[0.35em] uppercase text-gray-400"
+              className="font-heading text-xs sm:text-sm tracking-[0.35em] uppercase text-[#eae3d2b3]"
             >
-              TECHNOVISTA 2K25 • A DATA SCIENCE TECH CARNIVAL
+              TECHNOVISTA 2K26 • A DATA SCIENCE TECH CARNIVAL
             </motion.p>
 
             {/* Superhero tag */}
@@ -309,10 +320,10 @@ export default function EventDetail() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded border border-white/10 bg-white/[0.02] backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded border border-[rgba(243,229,202,0.08)] bg-white/[0.02] backdrop-blur-sm"
             >
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: event.accentColor }} />
-              <span className="font-stardom text-[10px] tracking-widest uppercase text-gray-400">
+              <span className="font-heading text-[10px] tracking-widest uppercase text-[#eae3d2b3]">
                 HERO NODE: {event.hero.toUpperCase()}
               </span>
             </motion.div>
@@ -322,7 +333,7 @@ export default function EventDetail() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-boska text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-white leading-none drop-shadow-md"
+              className="font-heading text-3xl xs:text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-white leading-none drop-shadow-md"
             >
               {event.name}
             </motion.h1>
@@ -332,7 +343,7 @@ export default function EventDetail() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="font-stardom text-base sm:text-lg uppercase tracking-[0.3em] font-medium"
+              className="font-heading text-base sm:text-lg uppercase tracking-[0.3em] font-semibold"
               style={{ color: event.accentColor }}
             >
               {event.tagline}
@@ -347,10 +358,14 @@ export default function EventDetail() {
             >
               <button
                 onClick={scrollToRegister}
-                className="px-8 py-3.5 rounded-xl text-black font-stardom text-xs tracking-widest uppercase transition-all duration-300 shadow-md font-bold"
+                className="group relative px-8.5 py-3.5 border font-heading font-semibold uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none"
                 style={{
-                  backgroundColor: event.accentColor,
-                  boxShadow: `0 0 20px ${event.glowColor}`
+                  backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', // Gold Metallic
+                  borderColor: 'rgba(255, 230, 160, 0.40)', // Gold border
+                  color: '#170709', // Dark burgundy contrast text
+                  letterSpacing: '0.16em',
+                  boxShadow: `0 4px 20px ${event.glowColor}, inset 0 1px 0 rgba(255, 255, 255, 0.40)`,
+                  transition: 'transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease',
                 }}
               >
                 Initiate Interface
@@ -360,7 +375,17 @@ export default function EventDetail() {
                   const el = document.getElementById("briefing");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="px-8 py-3.5 rounded-xl border border-white/10 hover:border-white/30 bg-black/40 hover:bg-black/70 backdrop-blur-md text-white font-stardom text-xs tracking-widest uppercase transition-all duration-300"
+                className="group relative px-8.5 py-3.5 border font-heading font-semibold uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)', // Translucent glass
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  borderColor: 'rgba(255, 248, 235, 0.08)', // Faint warm gold border
+                  color: '#eae3d2', // Soft ivory text
+                  letterSpacing: '0.16em', // Base spacing
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.20), inset 0 1px 1px rgba(255, 255, 255, 0.05)',
+                  transition: 'background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease',
+                }}
               >
                 Inspect Dossier
               </button>
@@ -380,21 +405,21 @@ export default function EventDetail() {
         </section>
 
         {/* 3. Mission Briefing Section */}
-        <section id="briefing" className="py-24 max-w-7xl mx-auto px-6 relative z-10 border-t border-white/5 bg-black/50 backdrop-blur-md rounded-t-[40px] shadow-2xl">
+        <section id="briefing" className="py-24 max-w-7xl mx-auto px-6 relative z-10 border-t border-[rgba(243,229,202,0.06)] bg-[#170709]/50 backdrop-blur-md rounded-t-[40px] shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Brief */}
             <div className="lg:col-span-7 space-y-6">
-              <h2 className="font-boska text-4xl sm:text-5xl font-bold uppercase text-white tracking-tight">
+              <h2 className="font-heading text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">
                 MISSION BRIEFING
               </h2>
               <div className="w-16 h-0.5" style={{ backgroundColor: event.accentColor }} />
-              <p className="font-switzer text-gray-300 text-sm sm:text-base leading-relaxed">
+              <p className="font-switzer text-[#eae3d2] text-sm sm:text-base leading-[1.75] font-light">
                 {event.desc}
               </p>
               
               {/* Tactical Objectives */}
               <div className="space-y-4 pt-4">
-                <h3 className="font-stardom text-xs uppercase tracking-widest text-gray-400">
+                <h3 className="font-heading text-xs font-semibold uppercase tracking-widest text-[#eae3d2b3]">
                   TACTICAL OBJECTIVES
                 </h3>
                 <div className="space-y-3">
@@ -403,9 +428,9 @@ export default function EventDetail() {
                     "Ensure maximum telemetry precision without computational bottlenecks.",
                     "Optimize execution algorithms to pass automated evaluation tests."
                   ].map((obj, i) => (
-                    <div key={i} className="flex gap-3 items-start text-xs sm:text-sm text-gray-400">
+                    <div key={i} className="flex gap-3 items-start text-xs sm:text-sm text-[#eae3d2b3]">
                       <span className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: event.accentColor }} />
-                      <span>{obj}</span>
+                      <span className="font-light">{obj}</span>
                     </div>
                   ))}
                 </div>
@@ -413,7 +438,7 @@ export default function EventDetail() {
             </div>
 
             {/* Right stats */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { icon: <RiShieldLine />, label: "Security Clearance", val: event.difficulty },
                 { icon: <RiGroupLine />, label: "Squad Metrics", val: event.teamSize },
@@ -422,12 +447,12 @@ export default function EventDetail() {
               ].map((stat, i) => (
                 <div 
                   key={i} 
-                  className="glass-card p-5 rounded-xl border border-white/5 flex flex-col justify-between h-32"
+                  className="glass-card p-5 rounded-2xl flex flex-col justify-between h-32"
                 >
                   <div className="text-xl" style={{ color: event.accentColor }}>{stat.icon}</div>
                   <div>
-                    <div className="text-[9px] uppercase tracking-wider text-gray-500 font-mono mb-1">{stat.label}</div>
-                    <div className="font-stardom text-xs uppercase text-white tracking-wider leading-tight">{stat.val}</div>
+                    <div className="text-[9px] uppercase tracking-wider text-[#eae3d280] font-mono mb-1">{stat.label}</div>
+                    <div className="font-heading font-black text-xs uppercase text-[#eae3d2] tracking-wider leading-tight">{stat.val}</div>
                   </div>
                 </div>
               ))}
@@ -438,10 +463,10 @@ export default function EventDetail() {
         {/* 4. Rules & Guidelines Section */}
         <section className="py-24 max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-boska text-4xl sm:text-5xl font-bold uppercase text-white tracking-tight">
+            <h2 className="font-heading text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">
               MISSION GUIDELINES
             </h2>
-            <p className="font-stardom text-xs uppercase tracking-widest text-gray-500 mt-2">
+            <p className="font-heading text-xs uppercase tracking-widest text-[#eae3d280] mt-2">
               Review parameters prior to engagement
             </p>
           </div>
@@ -452,9 +477,9 @@ export default function EventDetail() {
               return (
                 <div 
                   key={idx}
-                  className="glass-card rounded-xl border border-white/5 overflow-hidden transition-all duration-300"
+                  className="glass-card rounded-2xl overflow-hidden transition-all duration-300"
                   style={{
-                    borderColor: isExpanded ? `${event.accentColor}55` : "rgba(255, 255, 255, 0.05)"
+                    borderColor: isExpanded ? `${event.accentColor}55` : "rgba(243, 229, 202, 0.06)"
                   }}
                 >
                   <button
@@ -462,10 +487,10 @@ export default function EventDetail() {
                     className="w-full p-5 flex items-center justify-between text-left focus:outline-none"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center font-mono text-[9px] border border-white/10 text-gray-400">
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center font-mono text-[9px] border border-[rgba(243,229,202,0.1)] text-[#eae3d2b3]">
                         0{idx + 1}
                       </div>
-                      <span className="font-stardom text-sm sm:text-base text-white uppercase tracking-wider">
+                      <span className="font-heading text-sm sm:text-base text-white uppercase tracking-wider font-semibold">
                         {rule.title}
                       </span>
                     </div>
@@ -489,7 +514,7 @@ export default function EventDetail() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-5 pt-1 border-t border-white/5 font-switzer text-xs sm:text-sm text-gray-400 leading-relaxed">
+                        <div className="px-5 pb-5 pt-1 border-t border-[rgba(243,229,202,0.06)] font-switzer text-xs sm:text-sm text-[#eae3d2b3] leading-relaxed font-light">
                           {rule.detail}
                         </div>
                       </motion.div>
@@ -502,19 +527,19 @@ export default function EventDetail() {
         </section>
 
         {/* 5. Challenge Timeline Section */}
-        <section className="py-24 max-w-7xl mx-auto px-6 relative z-10 bg-black/40 backdrop-blur-sm rounded-[30px] border border-white/5">
+        <section className="py-24 max-w-7xl mx-auto px-6 relative z-10 bg-[#170709]/40 backdrop-blur-sm rounded-[30px] border border-[rgba(243,229,202,0.06)]">
           <div className="text-center mb-16">
-            <h2 className="font-boska text-4xl sm:text-5xl font-bold uppercase text-white tracking-tight">
+            <h2 className="font-heading text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">
               TACTICAL TIMELINE
             </h2>
-            <p className="font-stardom text-xs uppercase tracking-widest text-gray-500 mt-2">
+            <p className="font-heading text-xs uppercase tracking-widest text-[#eae3d280] mt-2">
               Timeline Coordinates
             </p>
           </div>
 
           <div className="relative max-w-4xl mx-auto">
             {/* Timeline center line */}
-            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[1px] bg-white/10 -translate-x-1/2" />
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[1px] bg-[rgba(243,229,202,0.1)] -translate-x-1/2" />
 
             <div className="space-y-12">
               {timelineStages.map((stage, idx) => (
@@ -529,7 +554,7 @@ export default function EventDetail() {
                   <div className="w-full md:w-1/2 md:px-8 pl-12 pr-4 md:text-right hidden md:block">
                     {idx % 2 === 0 ? (
                       <div>
-                        <span className="font-stardom text-xl tracking-wider text-white">
+                        <span className="font-heading text-xl font-bold tracking-wider text-white">
                           {stage.time}
                         </span>
                       </div>
@@ -538,14 +563,14 @@ export default function EventDetail() {
 
                   {/* Card content */}
                   <div className="w-full md:w-1/2 md:px-8 pl-12 pr-4">
-                    <div className="glass-card p-6 rounded-xl border border-white/5 relative">
-                      <div className="md:hidden font-stardom text-sm mb-2" style={{ color: event.accentColor }}>
+                    <div className="glass-card p-6 rounded-2xl relative">
+                      <div className="md:hidden font-heading text-sm mb-2" style={{ color: event.accentColor }}>
                         {stage.time}
                       </div>
-                      <h3 className="font-stardom text-base text-white uppercase tracking-wider mb-2" style={{ color: event.accentColor }}>
+                      <h3 className="font-heading font-bold text-base text-white uppercase tracking-wider mb-2" style={{ color: event.accentColor }}>
                         {stage.title}
                       </h3>
-                      <p className="font-switzer text-gray-400 text-xs sm:text-sm leading-relaxed">
+                      <p className="font-switzer text-[#eae3d2b3] text-xs sm:text-sm leading-relaxed font-light">
                         {stage.desc}
                       </p>
                     </div>
@@ -559,10 +584,10 @@ export default function EventDetail() {
         {/* 6. Vibranium Rewards Section */}
         <section className="py-24 max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-boska text-4xl sm:text-5xl font-bold uppercase text-white tracking-tight">
+            <h2 className="font-heading text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">
               TACTICAL BOUNTIES
             </h2>
-            <p className="font-stardom text-xs uppercase tracking-widest text-gray-500 mt-2">
+            <p className="font-heading text-xs uppercase tracking-widest text-[#eae3d280] mt-2">
               Prizes & Clearance Rewards
             </p>
           </div>
@@ -571,7 +596,7 @@ export default function EventDetail() {
             {rewardsList.map((reward, i) => (
               <div 
                 key={i} 
-                className="glass-card p-6 rounded-xl border border-white/5 flex flex-col justify-between h-64 relative overflow-hidden group hover:border-white/20 transition-all duration-300"
+                className="glass-card p-6 rounded-2xl flex flex-col justify-between h-64 relative overflow-hidden group"
               >
                 {/* Soft backdrop glow */}
                 <div 
@@ -581,13 +606,13 @@ export default function EventDetail() {
 
                 <div className="flex justify-between items-start">
                   <div className="text-2xl" style={{ color: event.accentColor }}>{reward.icon}</div>
-                  <span className="font-mono text-[8px] text-gray-600 tracking-wider">HUD // SECURE</span>
+                  <span className="font-mono text-[8px] text-[#eae3d245] tracking-wider">HUD // SECURE</span>
                 </div>
 
                 <div>
-                  <h4 className="font-stardom text-xs text-gray-500 uppercase tracking-widest mb-1">{reward.title}</h4>
-                  <h3 className="font-boska text-3xl font-extrabold text-white tracking-wider mb-2 leading-none">{reward.val}</h3>
-                  <p className="font-switzer text-gray-400 text-xs leading-relaxed">{reward.desc}</p>
+                  <h4 className="font-heading text-xs text-[#eae3d280] uppercase tracking-widest mb-1">{reward.title}</h4>
+                  <h3 className="font-heading text-3xl font-black text-white tracking-wider mb-2 leading-none">{reward.val}</h3>
+                  <p className="font-switzer text-[#eae3d2b3] text-xs leading-relaxed font-light">{reward.desc}</p>
                 </div>
               </div>
             ))}
@@ -600,10 +625,10 @@ export default function EventDetail() {
             <div className="flex justify-center text-4xl text-white/20 mb-2">
               <RiDoubleQuotesL />
             </div>
-            <h2 className="font-boska text-3xl sm:text-5xl font-black italic text-white tracking-tight leading-relaxed">
+            <h2 className="font-heading text-3xl sm:text-5xl font-black italic text-white tracking-tight leading-relaxed">
               "{quoteData.quote}"
             </h2>
-            <p className="font-stardom text-xs uppercase tracking-[0.45em] pt-4" style={{ color: event.accentColor }}>
+            <p className="font-heading text-xs uppercase tracking-[0.45em] pt-4" style={{ color: event.accentColor }}>
               {quoteData.author}
             </p>
           </div>
@@ -612,10 +637,10 @@ export default function EventDetail() {
         {/* 8. FAQ Accordion Section */}
         <section className="py-24 max-w-7xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-boska text-4xl sm:text-5xl font-bold uppercase text-white tracking-tight">
+            <h2 className="font-heading text-4xl sm:text-5xl font-black uppercase text-white tracking-tight">
               MISSION FAQ
             </h2>
-            <p className="font-stardom text-xs uppercase tracking-widest text-gray-500 mt-2">
+            <p className="font-heading text-xs uppercase tracking-widest text-[#eae3d280] mt-2">
               Frequently Queried Logs
             </p>
           </div>
@@ -626,13 +651,13 @@ export default function EventDetail() {
               return (
                 <div 
                   key={idx}
-                  className="glass-card rounded-xl border border-white/5 overflow-hidden transition-all duration-300"
+                  className="glass-card rounded-2xl overflow-hidden transition-all duration-300"
                 >
                   <button
                     onClick={() => setOpenFaqIdx(isOpen ? null : idx)}
                     className="w-full p-5 flex items-center justify-between text-left focus:outline-none"
                   >
-                    <span className="font-stardom text-sm sm:text-base text-white uppercase tracking-wider">
+                    <span className="font-heading text-sm sm:text-base text-white uppercase tracking-wider font-semibold">
                       {faq.q}
                     </span>
                     <span 
@@ -655,7 +680,7 @@ export default function EventDetail() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-5 pt-1 border-t border-white/5 font-switzer text-xs sm:text-sm text-gray-400 leading-relaxed">
+                        <div className="px-5 pb-5 pt-1 border-t border-[rgba(243,229,202,0.06)] font-switzer text-xs sm:text-sm text-[#eae3d2b3] leading-relaxed font-light">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -668,9 +693,9 @@ export default function EventDetail() {
         </section>
 
         {/* 9. Registration Core Section */}
-        <section id="registration-core" className="py-24 max-w-7xl mx-auto px-6 relative z-10 border-t border-white/5 bg-black/60 rounded-b-[40px] shadow-2xl">
+        <section id="registration-core" className="py-24 max-w-7xl mx-auto px-6 relative z-10 border-t border-[rgba(243,229,202,0.06)] bg-[#170709]/60 rounded-b-[40px] shadow-2xl">
           <div className="max-w-2xl mx-auto">
-            <div className="glass-panel p-8 sm:p-12 rounded-2xl border relative overflow-hidden" style={{ borderColor: `${event.accentColor}33` }}>
+            <div className="glass-panel p-8 sm:p-12 rounded-2xl border border-[rgba(243,229,202,0.08)] relative overflow-hidden" style={{ borderColor: `${event.accentColor}33` }}>
               {/* Decorative glows */}
               <div 
                 className="absolute top-0 right-0 w-44 h-44 rounded-full filter blur-[60px] opacity-15 pointer-events-none"
@@ -684,10 +709,10 @@ export default function EventDetail() {
               {!registered ? (
                 <form onSubmit={handleRegister} className="space-y-6">
                   <div className="space-y-2">
-                    <h3 className="font-stardom text-2xl text-white uppercase tracking-widest">
+                    <h3 className="font-heading text-2xl text-white uppercase tracking-widest font-black">
                       ACTIVATE OPERATIVE INTERFACE
                     </h3>
-                    <p className="font-switzer text-gray-400 text-xs sm:text-sm leading-relaxed">
+                    <p className="font-switzer text-[#eae3d2b3] text-xs sm:text-sm leading-relaxed font-light">
                       Register directly to the tactical briefing files database. Stand by for deploy parameters.
                     </p>
                   </div>
@@ -698,13 +723,13 @@ export default function EventDetail() {
                         type="text"
                         placeholder="Codename (Full Name)"
                         required
-                        className="w-full px-4 py-3.5 bg-black/80 border border-white/10 focus:border-white focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
+                        className="w-full px-5 py-3.5 bg-[#170709]/80 border border-[rgba(243,229,202,0.1)] focus:border-[#F59E0B] focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
                       />
                       <input
                         type="email"
                         placeholder="Comms Email"
                         required
-                        className="w-full px-4 py-3.5 bg-black/80 border border-white/10 focus:border-white focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
+                        className="w-full px-5 py-3.5 bg-[#170709]/80 border border-[rgba(243,229,202,0.1)] focus:border-[#F59E0B] focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
                       />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -712,13 +737,13 @@ export default function EventDetail() {
                         type="text"
                         placeholder="Agency Hub (College Name)"
                         required
-                        className="w-full px-4 py-3.5 bg-black/80 border border-white/10 focus:border-white focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
+                        className="w-full px-5 py-3.5 bg-[#170709]/80 border border-[rgba(243,229,202,0.1)] focus:border-[#F59E0B] focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
                       />
                       <input
                         type="tel"
                         placeholder="Comms Frequency (Phone)"
                         required
-                        className="w-full px-4 py-3.5 bg-black/80 border border-white/10 focus:border-white focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
+                        className="w-full px-5 py-3.5 bg-[#170709]/80 border border-[rgba(243,229,202,0.1)] focus:border-[#F59E0B] focus:outline-none rounded-xl text-xs text-white placeholder-gray-500 transition-colors"
                       />
                     </div>
                   </div>
@@ -726,10 +751,14 @@ export default function EventDetail() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 rounded-xl text-black font-stardom text-xs tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-2 font-bold select-none cursor-pointer"
+                    className="w-full py-3.5 border font-heading font-semibold uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none flex items-center justify-center gap-2 select-none"
                     style={{
-                      backgroundColor: event.accentColor,
-                      boxShadow: `0 0 20px ${event.glowColor}`
+                      backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', // Gold Metallic
+                      borderColor: 'rgba(255, 230, 160, 0.40)', // Gold border
+                      color: '#170709', // Dark burgundy contrast text
+                      letterSpacing: '0.16em',
+                      boxShadow: `0 4px 20px ${event.glowColor}, inset 0 1px 0 rgba(255, 255, 255, 0.40)`,
+                      transition: 'transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease',
                     }}
                   >
                     {loading ? "Synchronizing Grid..." : "Initiate Operation"}
@@ -744,16 +773,16 @@ export default function EventDetail() {
                     ✓
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-stardom text-2xl text-white uppercase tracking-widest">
+                    <h3 className="font-heading text-2xl text-white uppercase tracking-widest font-black">
                       ACCESS GRANTED // ALIGNED
                     </h3>
-                    <p className="font-switzer text-gray-400 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+                    <p className="font-switzer text-[#eae3d2b3] text-xs sm:text-sm max-w-md mx-auto leading-relaxed font-light">
                       Your coordinates are locked. Encryption keys and operations files have been transmitted to your comms email. Keep your frequencies open.
                     </p>
                   </div>
                   <button
                     onClick={() => setRegistered(false)}
-                    className="px-6 py-2.5 rounded-full border border-gray-600 hover:border-white text-gray-400 hover:text-white font-stardom text-[10px] tracking-wider uppercase transition-all duration-300"
+                    className="px-6 py-2.5 rounded-full border border-[rgba(243,229,202,0.2)] hover:border-[rgba(243,229,202,0.5)] text-[#eae3d2] font-heading text-[10px] tracking-wider uppercase transition-all duration-300"
                   >
                     Modify Entry
                   </button>

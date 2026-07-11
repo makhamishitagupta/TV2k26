@@ -7,7 +7,7 @@ export default function Hero({ onEnter, isEntered = false }) {
   return (
     <section
       id="hero"
-      className="relative h-full w-full flex flex-col justify-center py-4 overflow-hidden select-none"
+      className="relative min-h-full w-full flex flex-col justify-center py-8 lg:py-4 select-none"
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
         
@@ -19,30 +19,30 @@ export default function Hero({ onEnter, isEntered = false }) {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-1 flex flex-col space-y-10 lg:space-y-14 text-left lg:text-right order-2 lg:order-1"
+            className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-col gap-6 sm:gap-8 lg:gap-14 text-left lg:text-right order-2 lg:order-1"
           >
             {/* Stat Item 1 */}
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#f97316] block mb-1">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#F59E0B] block mb-1">
                 INDEX SYSTEM // EST. 2006
               </span>
-              <h3 className="font-boska text-4xl sm:text-5xl font-black text-white uppercase tracking-wide">
+              <h3 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-wide" style={{ backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))' }}>
                 18th Edition
               </h3>
-              <p className="font-switzer text-gray-300 text-sm sm:text-base leading-relaxed mt-2 max-w-sm lg:ml-auto">
+              <p className="font-switzer text-[#eae3d2b3] font-light text-sm sm:text-base leading-relaxed mt-2 max-w-sm lg:ml-auto">
                 Nearly two decades of technical innovation and student coordination.
               </p>
             </div>
 
             {/* Stat Item 2 */}
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#f97316] block mb-1">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#F59E0B] block mb-1">
                 SECTORS // TACTICAL MISSIONS
               </span>
-              <h3 className="font-boska text-4xl sm:text-5xl font-black text-white uppercase tracking-wide">
+              <h3 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-wide" style={{ backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))' }}>
                 8 Events
               </h3>
-              <p className="font-switzer text-gray-300 text-sm sm:text-base leading-relaxed mt-2 max-w-sm lg:ml-auto">
+              <p className="font-switzer text-[#eae3d2b3] font-light text-sm sm:text-base leading-relaxed mt-2 max-w-sm lg:ml-auto">
                 Immersive sprints in machine learning, security hacking, and optimization.
               </p>
             </div>
@@ -56,10 +56,10 @@ export default function Hero({ onEnter, isEntered = false }) {
             className="lg:col-span-2 flex flex-col items-center justify-center order-1 lg:order-2 relative group gap-6"
           >
             {/* Ambient Background Aura Glow behind image */}
-            <div className="absolute inset-0 rounded-[22px] bg-orange-600/10 blur-3xl group-hover:bg-orange-600/20 transition-all duration-700 -z-10" />
+            <div className="absolute inset-0 rounded-[22px] bg-[#d9040b]/10 blur-3xl group-hover:bg-[#d9040b]/18 transition-all duration-700 -z-10" />
 
             {/* Premium Glassmorphic Container for Banner with custom glow */}
-            <div className="p-3 rounded-[22px] border border-white/10 bg-white/[0.02] backdrop-blur-md shadow-[0_0_40px_rgba(249,115,22,0.15)] hover:border-orange-500/30 hover:shadow-[0_0_45px_rgba(249,115,22,0.3)] transition-all duration-500 max-w-2xl w-full">
+            <div className="p-3 rounded-[22px] border border-[rgba(243,229,202,0.08)] bg-white/[0.03] backdrop-blur-md shadow-[0_0_40px_rgba(217,4,11,0.15)] hover:border-[rgba(243,229,202,0.25)] hover:shadow-[0_0_45px_rgba(217,4,11,0.3)] transition-all duration-500 max-w-2xl w-full">
               <motion.img
                 src="/events/technovista-banner.png"
                 alt="VNRVJIET Technovista 18th Edition Banner"
@@ -73,14 +73,37 @@ export default function Hero({ onEnter, isEntered = false }) {
             {!isEntered && onEnter && (
               <motion.button
                 onClick={onEnter}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="relative px-8 py-3 rounded-full border border-red-500/40 text-xs tracking-[0.25em] uppercase font-stardom text-white overflow-hidden group shadow-[0_0_15px_rgba(217,4,11,0.15)] hover:border-red-500 hover:shadow-[0_0_25px_rgba(217,4,11,0.4)] transition-all duration-500 cursor-pointer bg-black/40 backdrop-blur-md mt-8"
+                whileHover="hover"
+                whileTap={{ scale: 0.98, y: 0 }}
+                className="group relative px-8.5 py-3.5 border font-heading font-semibold uppercase text-[11px] sm:text-xs rounded-full cursor-pointer overflow-hidden text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/20 focus-visible:ring-offset-2 focus-visible:ring-offset-black mt-8"
+                style={{
+                  backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', // Gold Metallic
+                  borderColor: 'rgba(255, 230, 160, 0.40)', // Gold border
+                  color: '#170709', // Dark burgundy contrast text
+                  letterSpacing: '0.16em',
+                  boxShadow: '0 4px 20px rgba(245, 158, 11, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.40)',
+                  transition: 'transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease',
+                }}
+                variants={{
+                  hover: {
+                    y: -2,
+                    borderColor: 'rgba(255, 240, 190, 0.70)',
+                    boxShadow: '0 4px 12px rgba(245, 158, 11, 0.15), 0 8px 32px rgba(245, 158, 11, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.50)',
+                  }
+                }}
               >
-                <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[200%] transition-transform duration-1000 ease-out" />
-                <div className="absolute top-1 left-2 w-1 h-1 rounded-full bg-red-500" />
-                <div className="absolute bottom-1 right-2 w-1 h-1 rounded-full bg-red-500" />
                 <span className="relative z-10">ENTER COMMAND GRID</span>
+                <motion.div
+                  variants={{
+                    hover: { x: '150%' }
+                  }}
+                  initial={{ x: '-150%', skewX: -25 }}
+                  transition={{ duration: 1.1, ease: [0.19, 1, 0.22, 1] }}
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.40) 50%, transparent 100%)',
+                  }}
+                />
               </motion.button>
             )}
           </motion.div>
@@ -90,43 +113,43 @@ export default function Hero({ onEnter, isEntered = false }) {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-1 flex flex-col space-y-10 lg:space-y-14 text-left order-3"
+            className="lg:col-span-1 grid grid-cols-1 sm:grid-cols-3 lg:flex lg:flex-col gap-6 sm:gap-8 lg:gap-14 text-left order-3"
           >
             {/* Stat Item 3 */}
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#f97316] block mb-1">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#F59E0B] block mb-1">
                 REWARDS // VALUATION
               </span>
-              <h3 className="font-boska text-4xl sm:text-5xl font-black text-white uppercase tracking-wide">
+              <h3 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-wide" style={{ backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))' }}>
                 ₹1,00,000+
               </h3>
-              <p className="font-switzer text-gray-300 text-sm sm:text-base leading-relaxed mt-2 max-w-sm">
+              <p className="font-switzer text-[#eae3d2b3] font-light text-sm sm:text-base leading-relaxed mt-2 max-w-sm">
                 Cash prize pools distributed across flagship symposium domains.
               </p>
             </div>
 
             {/* Stat Item 4 */}
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#f97316] block mb-1">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#F59E0B] block mb-1">
                 COORDINATES // VENUE PLACE
               </span>
-              <h3 className="font-boska text-4xl sm:text-5xl font-black text-white uppercase tracking-wide">
+              <h3 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-wide" style={{ backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))' }}>
                 VNRVJIET
               </h3>
-              <p className="font-switzer text-gray-300 text-sm sm:text-base leading-relaxed mt-2 max-w-sm">
+              <p className="font-switzer text-[#eae3d2b3] font-light text-sm sm:text-base leading-relaxed mt-2 max-w-sm">
                 VNR Vignana Jyothi Institute, Bachupally, Hyderabad.
               </p>
             </div>
             
             {/* Stat Item 5 */}
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-[#f97316] block mb-1">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-[#F59E0B] block mb-1">
                 CONFLUENCE // ATTENDEES
               </span>
-              <h3 className="font-boska text-4xl sm:text-5xl font-black text-white uppercase tracking-wide">
+              <h3 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-wide" style={{ backgroundImage: 'linear-gradient(135deg, #FFE899 0%, #F59E0B 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block', filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8))' }}>
                 600+ Agents
               </h3>
-              <p className="font-switzer text-gray-300 text-sm sm:text-base leading-relaxed mt-2 max-w-sm">
+              <p className="font-switzer text-[#eae3d2b3] font-light text-sm sm:text-base leading-relaxed mt-2 max-w-sm">
                 Tech enthusiasts and elite coders assembling for symposium operations.
               </p>
             </div>

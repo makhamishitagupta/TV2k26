@@ -56,45 +56,45 @@ export default function HeroSection() {
   const containerRef = useRef(null);
   const isMobile = width > 0 && width < 768;
 
-  // Drive scroll progress directly by window.scrollY from 0 to 100vh
+  // Drive scroll progress directly by window.scrollY
   const { scrollY } = useScroll();
   const rawProgress = useTransform(
     scrollY,
-    [0, isMobile ? (windowHeight || 800) : 1.5 * (windowHeight || 800)],
+    [0, isMobile ? (windowHeight || 800) : 2.0 * (windowHeight || 800)],
     [0, 1]
   );
   const scrollYProgress = useSpring(rawProgress, {
-    stiffness: 160,
+    stiffness: 120,
     damping: 30,
-    mass: 0.1,
+    mass: 0.08,
     restDelta: 0.001
   });
 
-  // Background Grid Line exit: Opacity 1 -> 0.8 from 0.0 to 0.85, starts fading at 0.45
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.45, 0.85], [1, 1, 0.8]);
+  // Background Grid Line exit: Opacity 1 -> 0 from 0.70 to 1.0 (to blend smoothly with EventHub background)
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.45, 0.70, 1.0], [1, 1, 1, 0]);
 
   // Scroll arrow exit: Opacity 1 -> 0 from 0.0 to 0.20
   const arrowOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
-  // Logo Badges exit: Y 0 -> -250px, Opacity 1 -> 0 from 0.0 to 0.55, starts fading at 0.35
-  const logosY = useTransform(scrollYProgress, [0, 0.85], [0, isMobile ? 0 : -250]);
-  const logosOpacity = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 1, isMobile ? 1 : 0]);
+  // Logo Badges exit: Y 0 -> -250px, Opacity 1 -> 0 (completely gone by 0.30)
+  const logosY = useTransform(scrollYProgress, [0, 0.35], [0, isMobile ? -80 : -250]);
+  const logosOpacity = useTransform(scrollYProgress, [0, 0.10, 0.30], [1, 1, 0]);
 
-  // Ambient Title Glow exit: Y 0 -> -300px, Scale 1 -> 1.4, Opacity 1 -> 0 from 0.0 to 0.55, starts fading at 0.35
-  const glowY = useTransform(scrollYProgress, [0, 0.85], [0, isMobile ? 0 : -300]);
-  const glowScale = useTransform(scrollYProgress, [0, 0.85], [1, isMobile ? 1 : 1.4]);
-  const glowOpacity = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 1, isMobile ? 1 : 0]);
+  // Ambient Title Glow exit: Y 0 -> -300px, Scale 1 -> 1.4, Opacity 1 -> 0 (completely gone by 0.36)
+  const glowY = useTransform(scrollYProgress, [0, 0.36], [0, isMobile ? -80 : -300]);
+  const glowScale = useTransform(scrollYProgress, [0, 0.36], [1, isMobile ? 1.15 : 1.4]);
+  const glowOpacity = useTransform(scrollYProgress, [0, 0.12, 0.36], [1, 1, 0]);
 
-  // Central 3D shape/object exit: Y 0 -> -500px, Scale 1 -> 0.75, Opacity 1 -> 0 from 0.0 to 0.55, starts fading at 0.35
-  const featY = useTransform(scrollYProgress, [0, 0.85], [0, isMobile ? 0 : -500]);
-  const featScale = useTransform(scrollYProgress, [0, 0.85], [1, isMobile ? 1 : 0.75]);
-  const featOpacity = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 1, isMobile ? 1 : 0]);
+  // Central 3D shape/object exit: Y 0 -> -500px, Scale 1 -> 0.75, Opacity 1 -> 0 (completely gone by 0.36)
+  const featY = useTransform(scrollYProgress, [0, 0.36], [0, isMobile ? -120 : -500]);
+  const featScale = useTransform(scrollYProgress, [0, 0.36], [1, isMobile ? 0.85 : 0.75]);
+  const featOpacity = useTransform(scrollYProgress, [0, 0.12, 0.36], [1, 1, 0]);
 
-  // WebGL SideRays exit: Y 0 -> -300px, ScaleY 1 -> 1.4, Opacity 1 -> 0, Blur 0px -> 8px from 0.0 to 0.55, starts exit transformations at 0.35 opacity
-  const raysY = useTransform(scrollYProgress, [0, 0.85], [0, isMobile ? 0 : -300]);
-  const raysScaleY = useTransform(scrollYProgress, [0, 0.85], [1, isMobile ? 1 : 1.4]);
-  const raysOpacityScroll = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 1, isMobile ? 1 : 0]);
-  const raysBlur = useTransform(scrollYProgress, [0, 0.35, 0.55], ['blur(0px)', 'blur(0px)', isMobile ? 'blur(0px)' : 'blur(8px)']);
+  // WebGL SideRays exit: Y 0 -> -300px, ScaleY 1 -> 1.4, Opacity 1 -> 0, Blur 0px -> 8px (completely gone by 0.36)
+  const raysY = useTransform(scrollYProgress, [0, 0.36], [0, isMobile ? -100 : -300]);
+  const raysScaleY = useTransform(scrollYProgress, [0, 0.36], [1, isMobile ? 1.2 : 1.4]);
+  const raysOpacityScroll = useTransform(scrollYProgress, [0, 0.12, 0.36], [1, 1, 0]);
+  const raysBlur = useTransform(scrollYProgress, [0, 0.12, 0.36], ['blur(0px)', 'blur(0px)', isMobile ? 'blur(4px)' : 'blur(8px)']);
 
   const viewportTier = width >= 1024 ? 'desktop' : width >= 768 ? 'tablet' : 'mobile';
 
@@ -120,7 +120,7 @@ export default function HeroSection() {
       }
     } else {
       window.scrollTo({
-        top: vh * 1.42,
+        top: vh * 0.95,
         behavior: 'smooth'
       });
     }
@@ -191,13 +191,13 @@ export default function HeroSection() {
         ref={containerRef}
         id="hero-scene-container"
         className="relative w-full"
-        style={{ height: isMobile ? 'auto' : '250vh' }}
+        style={{ height: isMobile ? 'auto' : '200vh' }}
       >
         <header
           id="stage"
           className={[
             isMobile 
-              ? "relative w-full h-screen overflow-hidden flex flex-col justify-center items-center tv-stage"
+              ? "relative w-full min-h-screen overflow-hidden flex flex-col justify-center items-center tv-stage"
               : "sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-center items-center tv-stage",
             isSearching ? 'is-searching' : '',
             isOpen ? 'is-open' : '',
@@ -206,7 +206,7 @@ export default function HeroSection() {
         >
           <motion.div style={{ opacity: bgOpacity }} className="absolute inset-0 -z-10">
             <HeroBackground delay={0.3} accent={accent} animateState={animateState} />
-            {!isMobile && <VolumetricBeam animateState={isOpen ? 'visible' : 'hidden'} />}
+            <VolumetricBeam isMobile={isMobile} animateState={isOpen ? 'visible' : 'hidden'} />
           </motion.div>
 
           {!isMobile && (
@@ -242,34 +242,33 @@ export default function HeroSection() {
                 mouseX={mx}
                 mouseY={my}
                 isTouch={isTouch}
+                isMobile={isMobile}
                 delay={0.1}
                 animateState={isOpen ? 'visible' : 'hidden'}
               />
             </motion.div>
 
-            {!isMobile && (
-              <HeroParticles
-                mouseX={mx}
-                mouseY={my}
-                isTouch={isTouch}
-                viewportTier={viewportTier}
-                accent={accent}
-                delay={0.2}
-                animateState={isOpen ? 'visible' : 'hidden'}
-              />
-            )}
+            <HeroParticles
+              mouseX={mx}
+              mouseY={my}
+              isTouch={isTouch}
+              isMobile={isMobile}
+              viewportTier={viewportTier}
+              accent={accent}
+              delay={0.2}
+              animateState={isOpen ? 'visible' : 'hidden'}
+            />
 
-            {!isMobile && (
-              <HeroFloatingObjects
-                mouseX={mx}
-                mouseY={my}
-                isTouch={isTouch}
-                viewportTier={viewportTier}
-                accent={accent}
-                delay={0.2}
-                animateState={isOpen ? 'visible' : 'hidden'}
-              />
-            )}
+            <HeroFloatingObjects
+              mouseX={mx}
+              mouseY={my}
+              isTouch={isTouch}
+              isMobile={isMobile}
+              viewportTier={viewportTier}
+              accent={accent}
+              delay={0.2}
+              animateState={isOpen ? 'visible' : 'hidden'}
+            />
 
             <motion.div style={{ y: featY, scale: featScale, opacity: featOpacity }} className="absolute inset-0 pointer-events-none">
               <HeroFeaturedObject
@@ -291,12 +290,6 @@ export default function HeroSection() {
                 }}
                 className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 pointer-events-auto"
               >
-                {isMobile && (
-                  <div className="flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-neutral-200/10 dark:border-neutral-800/10 bg-white/20 dark:bg-black/20 backdrop-blur-md">
-                    <img src={clubLogo} alt="TV" className="w-5 h-5 object-contain" />
-                    <span className="text-[10px] font-mono tracking-widest text-white/80 uppercase">VNR VJIET</span>
-                  </div>
-                )}
 
                 <HeroCountdown
                   isMobile={isMobile}
@@ -322,8 +315,6 @@ export default function HeroSection() {
             </div>
           </div>
 
-
-
           <motion.div
             style={{ opacity: arrowOpacity }}
             className="tv-scroll-cue absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2.5 cursor-pointer pointer-events-auto group"
@@ -333,9 +324,9 @@ export default function HeroSection() {
             transition={{ duration: 1.0, delay: 2.4, ease: GOLDEN_EASE }}
           >
             <motion.span 
-              animate={{ opacity: [0.55, 0.90, 0.55] }} // Increased visibility pulse bounds
+              animate={{ opacity: [0.45, 0.75, 0.45] }} // Quieter visibility pulse bounds
               transition={{ duration: 3.0, repeat: Infinity, ease: 'easeInOut' }}
-              className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-mono text-white/70 group-hover:text-white transition-colors duration-300 select-none"
+              className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-mono text-white/40 group-hover:text-white transition-colors duration-300 select-none"
             >
               Scroll to Explore
             </motion.span>
@@ -345,17 +336,22 @@ export default function HeroSection() {
               height="6"
               viewBox="0 0 10 6"
               fill="none"
-              stroke="#ffc958" // Warm amber accent color matching spotlights
+              stroke="rgba(255, 201, 88, 0.55)" // Muted warm amber accent stroke
               className="group-hover:stroke-white transition-colors duration-300"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               animate={{
-                y: [0, 6, 0],
-                opacity: [0.4, 1.0, 0.4],
+                y: [0, 5, 0],
+                opacity: [0.35, 0.85, 0.35],
+                filter: [
+                  'drop-shadow(0 0 1px rgba(255, 201, 88, 0.1))',
+                  'drop-shadow(0 0 4px rgba(255, 201, 88, 0.5))',
+                  'drop-shadow(0 0 1px rgba(255, 201, 88, 0.1))'
+                ]
               }}
               transition={{
-                duration: 2.2,
+                duration: 2.5,
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}

@@ -22,9 +22,9 @@ export default function HeroCountdown({
   const sceneProgress = useHeroScroll();
 
   // Scroll transition mapping (Progress 0% to 40%)
-  const yScroll = useTransform(sceneProgress, [0, 0.40], [0, isMobile ? 0 : -40]);
-  const opacityScroll = useTransform(sceneProgress, [0, 0.40], [1, isMobile ? 1 : 0]);
-  const pointerEventsScroll = useTransform(sceneProgress, (p) => p > 0.40 ? (isMobile ? 'auto' : 'none') : 'auto');
+  const yScroll = useTransform(sceneProgress, [0, 0.40], [0, isMobile ? -20 : -40]);
+  const opacityScroll = useTransform(sceneProgress, [0, 0.40], [1, 0]);
+  const pointerEventsScroll = useTransform(sceneProgress, (p) => p > 0.40 ? 'none' : 'auto');
 
   const padTwo = (n) => String(n).padStart(2, '0');
 
@@ -57,7 +57,7 @@ export default function HeroCountdown({
       {countdownVisible && (
         <motion.div
           style={{ y: yScroll, opacity: opacityScroll, pointerEvents: pointerEventsScroll }}
-          className="mb-6 sm:mb-8 mt-[-22px] sm:mt-[-34px]" // Lifted 10px higher
+          className={`mb-4 sm:mb-8 ${isMobile ? 'mt-0' : 'mt-[-34px]'}`}
         >
           <motion.div
             variants={pillVariants}
@@ -70,12 +70,24 @@ export default function HeroCountdown({
             transition={{ duration: 0.6, ease: 'easeInOut' }}
             exit={{ opacity: 0, y: -8, transition: { duration: 0.6, ease: GOLDEN_EASE } }}
           >
-            <div 
-              className="inline-flex items-center gap-3 sm:gap-4 px-4.5 sm:px-5 py-2 sm:py-2.5 border rounded-[22px] backdrop-blur-md relative overflow-hidden" // Reduced padding for compact layout
+            <motion.div 
+              className={`inline-flex items-center relative overflow-hidden border rounded-[22px] backdrop-blur-md ${isMobile ? 'gap-2 px-3 py-1.5' : 'gap-4 px-5 py-2.5'}`}
               style={{
-                background: 'linear-gradient(180deg, rgba(32, 24, 15, 0.55) 0%, rgba(20, 14, 8, 0.70) 100%)', // Premium warm bronze glass
-                borderColor: 'rgba(255, 201, 88, 0.14)', // Subtle amber border outline
-                boxShadow: '0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 1.5px rgba(255, 255, 255, 0.05), inset 0 -1px 8px rgba(255, 201, 88, 0.04)', // Inner shadow
+                backgroundImage: 'radial-gradient(circle at 50% 0%, rgba(255, 201, 88, 0.08), transparent 60%), linear-gradient(135deg, rgba(30, 25, 20, 0.45) 0%, rgba(15, 12, 10, 0.65) 100%)', // Premium warm bronze glass with top sun reflection
+                borderColor: 'rgba(255, 201, 88, 0.16)', // Subtle amber border outline
+                willChange: 'box-shadow',
+              }}
+              animate={{
+                boxShadow: [
+                  '0 4px 16px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.06), inset 0 -1px 8px rgba(255, 201, 88, 0.03), 0 0 0px rgba(255, 201, 88, 0)',
+                  '0 4px 16px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.06), inset 0 -1px 8px rgba(255, 201, 88, 0.03), 0 0 10px rgba(255, 201, 88, 0.08)',
+                  '0 4px 16px rgba(0, 0, 0, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.06), inset 0 -1px 8px rgba(255, 201, 88, 0.03), 0 0 0px rgba(255, 201, 88, 0)',
+                ]
+              }}
+              transition={{
+                duration: 5.0,
+                repeat: Infinity,
+                ease: 'easeInOut'
               }}
             >
               {/* Cursor-reactive glass reflection */}
@@ -83,24 +95,24 @@ export default function HeroCountdown({
 
               {/* T-Minus Label */}
               <span
-                className="text-[10px] sm:text-[11px] font-mono font-semibold uppercase tracking-[0.2em] relative z-10"
+                className={`font-mono font-semibold uppercase tracking-[0.2em] relative z-10 ${isMobile ? 'text-[8.5px]' : 'text-[11px]'}`}
                 style={{ color: '#8d94a0' }} // Clean, high-contrast label color
               >
                 T-Minus
               </span>
 
               {/* Divider */}
-              <div className="w-px h-4 bg-neutral-800/60 relative z-10" />
+              <div className={`w-px bg-neutral-800/60 relative z-10 ${isMobile ? 'h-3' : 'h-4'}`} />
 
               {/* Time Units */}
-              <div className="flex items-center gap-1.5 sm:gap-2 relative z-10">
+              <div className={`flex items-center relative z-10 ${isMobile ? 'gap-1' : 'gap-2'}`}>
                 {units.map((unit, i) => (
                   <React.Fragment key={unit.label}>
-                    <div className="flex flex-col items-center min-w-[28px] sm:min-w-[34px]">
+                    <div className={`flex flex-col items-center justify-center ${isMobile ? 'min-w-[24px]' : 'min-w-[34px]'}`}>
                       <Counter
                         value={parseInt(unit.value, 10)}
                         places={[10, 1]}
-                        fontSize={16}
+                        fontSize={isMobile ? 12 : 16}
                         fontWeight={600}
                         textColor="#ffffff" // Higher contrast white text
                         padding={0}
@@ -118,7 +130,7 @@ export default function HeroCountdown({
                         }}
                       />
                       <span 
-                        className="text-[7px] sm:text-[8px] font-mono uppercase tracking-[0.15em] mt-0.5"
+                        className={`font-mono uppercase tracking-[0.15em] mt-0.5 ${isMobile ? 'text-[6px]' : 'text-[8px]'}`}
                         style={{ color: '#777D87' }}
                       >
                         {unit.label}
@@ -126,7 +138,7 @@ export default function HeroCountdown({
                     </div>
                     {i < units.length - 1 && (
                       <span 
-                        className="font-light text-xs sm:text-sm -mt-2 select-none" // Restored compact spacing (removed px-1)
+                        className={`font-light select-none ${isMobile ? 'text-[10px] -mt-1.5' : 'text-sm -mt-2'}`}
                         style={{ color: 'rgba(119, 125, 135, 0.35)' }}
                       >
                         :
@@ -135,7 +147,7 @@ export default function HeroCountdown({
                   </React.Fragment>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </motion.div>
       )}

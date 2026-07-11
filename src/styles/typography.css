@@ -15,11 +15,19 @@
 /* Editorial Heading & Subheading Elements */
 .editorial-title-lg {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  font-size: clamp(1.8rem, 9.5vw, 6.5rem);
   font-weight: 300;
   line-height: 0.95;
   letter-spacing: -0.04em;
   text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .editorial-title-lg {
+    font-size: clamp(1.8rem, 9.2vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
 }
 
 .editorial-title-md {

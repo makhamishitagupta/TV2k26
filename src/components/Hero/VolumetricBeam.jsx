@@ -6,7 +6,7 @@ import { useHeroScroll } from '../../contexts/HeroScrollContext';
  * VolumetricBeam — Renders a soft, architectural light beam.
  * Simulates a high-performance spotlight projecting a warm amber light cone.
  */
-export default function VolumetricBeam({ animateState = 'hidden' }) {
+export default function VolumetricBeam({ animateState = 'hidden', isMobile = false }) {
   const sceneProgress = useHeroScroll();
   // Fade out spotlight between scroll progress 0 (start) and 0.45 (before About slides in)
   const beamScrollOpacity = useTransform(sceneProgress, [0, 0.45], [1, 0]);
@@ -22,9 +22,9 @@ export default function VolumetricBeam({ animateState = 'hidden' }) {
       scaleX: 1.0,
       scaleY: 1.0,
       transition: {
-        duration: 2.5, // Slow, extremely smooth fade
-        delay: 1.2,    // Reveal begins after text reveals
-        ease: 'easeInOut', // Soft ease-in and ease-out to prevent popping
+        duration: isMobile ? 2.0 : 2.5,
+        delay: isMobile ? 1.0 : 1.2,
+        ease: 'easeInOut',
       }
     }
   };
@@ -49,19 +49,23 @@ export default function VolumetricBeam({ animateState = 'hidden' }) {
       >
         {/* Rotating, Breathing, and Floating spotlight cone */}
         <motion.div
-          className="absolute top-[-15vh] left-1/2 w-[45vw] md:w-[60vw] lg:w-[70vw] h-[150vh] pointer-events-none"
+          className={
+            isMobile
+              ? "absolute top-[-15vh] left-1/2 w-[140vw] h-[140vh] pointer-events-none"
+              : "absolute top-[-15vh] left-1/2 w-[45vw] md:w-[60vw] lg:w-[70vw] h-[150vh] pointer-events-none"
+          }
           style={{
             x: '-50%',
             transformOrigin: 'top center',
-            rotate: 'var(--tv-beam-angle, 0deg)',
+            rotate: isMobile ? '0deg' : 'var(--tv-beam-angle, 0deg)',
             willChange: 'transform, opacity',
           }}
           animate={{
-            opacity: [0.86, 1.14, 0.86], // Breathing opacity scaling factor
-            scale: [0.995, 1.005, 0.995], // Breathing scale
+            opacity: [0.93, 1.07, 0.93],
+            scale: [0.998, 1.002, 0.998],
           }}
           transition={{
-            duration: 5, // Breathing period (12-18s)
+            duration: 10,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
@@ -69,9 +73,13 @@ export default function VolumetricBeam({ animateState = 'hidden' }) {
           <svg
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
-            className="w-full h-full opacity-[0.25] md:opacity-[0.3] lg:opacity-[0.4]"
+            className={
+              isMobile
+                ? "w-full h-full opacity-[0.26]"
+                : "w-full h-full opacity-[0.22] md:opacity-[0.26] lg:opacity-[0.32]"
+            }
             style={{
-              filter: 'blur(8px)', // Midway blur value for defined but smooth edges
+              filter: isMobile ? 'blur(26px)' : 'blur(20px)',
             }}
           >
             <defs>
@@ -86,12 +94,13 @@ export default function VolumetricBeam({ animateState = 'hidden' }) {
                 <stop offset="100%" stopColor="#ff7300" stopOpacity="0" />
               </linearGradient>
 
-              {/* Vertical gradient mask: midway fadeout length */}
+              {/* Vertical gradient mask: refined vertical fade to prevent abrupt endings */}
               <linearGradient id="beamVertical" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#ffffff" stopOpacity="1.0" />
-                <stop offset="30%" stopColor="#ffffff" stopOpacity="0.95" />
-                <stop offset="68%" stopColor="#ffffff" stopOpacity="0.65" />
-                <stop offset="90%" stopColor="#ffffff" stopOpacity="0.25" />
+                <stop offset="25%" stopColor="#ffffff" stopOpacity="0.80" />
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.45" />
+                <stop offset="70%" stopColor="#ffffff" stopOpacity="0.18" />
+                <stop offset="85%" stopColor="#ffffff" stopOpacity="0.06" />
                 <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
               </linearGradient>
               
@@ -100,9 +109,9 @@ export default function VolumetricBeam({ animateState = 'hidden' }) {
               </mask>
             </defs>
 
-            {/* Narrower tapered spotlight path: reduced angle */}
+            {/* Narrower tapered spotlight path: reduced angle (widened on mobile) */}
             <path
-              d="M 46 0 L 54 0 L 86 100 L 14 100 Z"
+              d={isMobile ? "M 25 0 L 75 0 L 100 100 L 0 100 Z" : "M 46 0 L 54 0 L 86 100 L 14 100 Z"}
               fill="url(#beamHorizontal)"
               mask="url(#beamMask)"
             />

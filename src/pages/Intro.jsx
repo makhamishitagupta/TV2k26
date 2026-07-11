@@ -16,7 +16,7 @@ export default function Intro() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "MISSION COMMAND 2K26 | Avengers Command Center";
+    document.title = "TECHNOVISTA 2K26 | VJ Data Questers";
     setMounted(true);
     if (typeof window !== "undefined") {
       const hasShownIntro = window.__hasShownIntro;
@@ -80,14 +80,14 @@ export default function Intro() {
       {isLoading ? (
         <LandingIntro onComplete={handleIntroComplete} />
       ) : (
-        <div className="relative h-screen w-screen bg-black overflow-hidden flex flex-col justify-center select-none">
+        <div className="relative min-h-screen w-screen bg-transparent overflow-y-auto lg:overflow-hidden flex flex-col justify-center select-none py-8 lg:py-0">
           {/* Doctor Strange spark mouse trails */}
           <SparksEffect />
           
           {/* Solid black background */}
           <SketchfabBackground />
 
-          <main className="relative z-10 flex flex-col justify-center w-full h-full">
+          <main className="relative z-10 flex flex-col justify-center w-full min-h-full lg:h-full">
             <OpeningPage onEnter={handleEnter} isEntered={stage !== "portal"} />
           </main>
 

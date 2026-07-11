@@ -162,11 +162,11 @@ function FloatingWordItem({
   const exitX = useTransform(exitProgress, (p) => w.survivor ? 0 : w.exitVector.x * 800 * p);
   const exitY = useTransform(exitProgress, (p) => w.survivor ? 0 : w.exitVector.y * 800 * p);
 
-  // Parent exit scroll opacity: fades to 0 by 0.85
+  // Parent exit scroll opacity: fades to 0 by 0.40
   const parentScrollOpacity = useTransform(
     sceneProgress,
-    [0, 0.45, 0.85],
-    [1, 1, w.survivor ? 0.45 : 0]
+    [0, 0.15, 0.40],
+    [1, 1, w.survivor ? 0.10 : 0]
   );
 
   // Mouse Parallax offsets

@@ -12,6 +12,7 @@ export default function HeroAmbientGlow({
   mouseX = 0,
   mouseY = 0,
   isTouch = false,
+  isMobile = false,
   delay = 0.4,
   animateState = 'hidden',
 }) {
@@ -26,6 +27,9 @@ export default function HeroAmbientGlow({
       transition: { duration: 2.0, delay, ease: GOLDEN_EASE }
     }
   };
+
+  const glowSize = isMobile ? '400px' : '750px';
+  const glowBlur = isMobile ? 'blur(50px)' : 'blur(75px)';
 
   return (
     <motion.div
@@ -46,15 +50,15 @@ export default function HeroAmbientGlow({
           scale: [1, 1.05, 1],
         }}
         transition={{
-          duration: 12, // slightly faster breathing duration
+          duration: 12,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
         style={{
-          width: '750px',
-          height: '750px',
+          width: glowSize,
+          height: glowSize,
           background: `radial-gradient(circle, ${accent}65 0%, ${accent}25 35%, ${accent}06 70%, transparent 100%)`,
-          filter: 'blur(75px)',
+          filter: glowBlur,
           borderRadius: '50%',
           transition: 'background 0.8s ease',
         }}

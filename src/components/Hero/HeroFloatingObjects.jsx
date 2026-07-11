@@ -111,12 +111,13 @@ export default function HeroFloatingObjects({
   mouseX = 0,
   mouseY = 0,
   isTouch = false,
+  isMobile = false,
   viewportTier = 'desktop',
   accent = '#ffffff',
   delay = 0.6,
   animateState = 'hidden',
 }) {
-  const counts = { desktop: 6, tablet: 4, mobile: 2 }; // Half count per side
+  const counts = { desktop: 9, tablet: 6, mobile: 2 }; // Half count per side (mobile: 2 per side = 4 total)
   const halfCount = counts[viewportTier] || counts.desktop;
   const count = halfCount * 2; // Total object count for effects loop
 
@@ -148,34 +149,64 @@ export default function HeroFloatingObjects({
         return (s % 10000) / 10000;
       };
 
-      // Add a tiny random jitter (±2%) to anchors for organic composition
-      const pos = {
-        x: Math.max(2, Math.min(98, (anchor?.x ?? 50) + (rand() * 4 - 2))),
-        y: Math.max(2, Math.min(98, (anchor?.y ?? 50) + (rand() * 4 - 2)))
-      };
-
       // Assign to explicit size categories (Large, Medium, Small hierarchy)
       let sizeClass = 'medium';
       if (i % 3 === 0) sizeClass = 'large';
       else if (i % 3 === 1) sizeClass = 'small';
 
-      let baseSize, depth, opacityMultiplier, blur;
+      // Adjust anchors and jitter for Safe Zones on mobile
+      let rawX = (anchor?.x ?? 50) + (rand() * 4 - 2);
+      let rawY = (anchor?.y ?? 50) + (rand() * 4 - 2);
+
+      if (isMobile) {
+        // Enforce X safe zone (15% to 85% is unsafe for text)
+        if (rawX >= 15 && rawX <= 85) {
+          // Push to nearest safe side
+          rawX = rawX < 50 ? 8 : 92;
+        }
+        // Move large icons even closer to the edges
+        if (sizeClass === 'large') {
+          rawX = rawX < 50 ? 5 : 95;
+          // Avoid placing large icons behind the subtitle/middle area (y: 35 to 65)
+          if (rawY >= 30 && rawY <= 70) {
+            rawY = rawY < 50 ? 20 : 80;
+          }
+        }
+        // Avoid top (y < 12) and bottom (y > 80) center overlaps
+        if (rawX > 20 && rawX < 80) {
+          if (rawY < 12) rawY = 14;
+          if (rawY > 80) rawY = 78;
+        }
+      }
+
+      const pos = {
+        x: Math.max(2, Math.min(98, rawX)),
+        y: Math.max(2, Math.min(98, rawY))
+      };
+
+      let baseSize, depth, opacityMultiplier, blur, parallaxMultiplier;
 
       if (sizeClass === 'large') {
-        baseSize = 44 + rand() * 6; // 44–50px
-        depth = rand(); // normalized depth
-        opacityMultiplier = 0.18; // Reduced opacity to support instead of compete
-        blur = 0.6 + depth * 0.8; // Foreground camera blur
+        // Foreground (large, blurred, high opacity, fast parallax)
+        baseSize = isMobile ? (32 + rand() * 6) : (46 + rand() * 12);
+        depth = 0.7 + rand() * 0.3; // 0.7 to 1.0 (close)
+        opacityMultiplier = 0.35 + rand() * 0.10; // 35% to 45%
+        blur = isMobile ? 1.0 : (1.8 + rand() * 1.4); // Less blur on mobile for perf
+        parallaxMultiplier = 0.6 + depth * 0.2;
       } else if (sizeClass === 'small') {
-        baseSize = 18 + rand() * 4; // 18–22px
-        depth = rand(); // normalized depth
-        opacityMultiplier = 0.09; // Reduced opacity to support instead of compete
-        blur = 0.4 + (1.0 - depth) * 0.6; // Background camera blur
+        // Background (tiny, fainted, blurred, slow parallax)
+        baseSize = isMobile ? (10 + rand() * 3) : (10 + rand() * 6);
+        depth = 0.0 + rand() * 0.3; // 0.0 to 0.3 (far)
+        opacityMultiplier = 0.16 + rand() * 0.08; // 16% to 24%
+        blur = isMobile ? 0.5 : (1.0 + rand() * 1.0);
+        parallaxMultiplier = 0.1 + depth * 0.1;
       } else {
-        baseSize = 30 + rand() * 4; // 30–34px
-        depth = rand(); // normalized depth
-        opacityMultiplier = 0.13; // Reduced opacity to support instead of compete
-        blur = 0; // Middle focused tier
+        // Midground (medium, clear, in-focus, normal parallax)
+        baseSize = isMobile ? (20 + rand() * 4) : (26 + rand() * 8);
+        depth = 0.3 + rand() * 0.4; // 0.3 to 0.7 (middle)
+        opacityMultiplier = 0.25 + rand() * 0.10; // 25% to 35%
+        blur = 0; // In-focus
+        parallaxMultiplier = 0.3 + depth * 0.15;
       }
 
       const floatDuration = 12 + rand() * 8; // 12–20s
@@ -183,7 +214,7 @@ export default function HeroFloatingObjects({
       const driftY = 10 + rand() * 8;
       const driftX = 20 + rand() * 6;
       const rotRange = -2 + rand() * 4; // ±2° rotation
-      const opacity = opacityMultiplier + rand() * 0.04; // Reduced variance to keep icon opacity subtle
+      const opacity = (opacityMultiplier + rand() * 0.04) * (isMobile ? 0.75 : 1.0); // Lower opacity on mobile
 
       // Spec 3 & 4: Persistent survivor tag and exit vector direction
       const survivor = rand() < 0.3; // Stable ~30% survivor flag
@@ -197,7 +228,7 @@ export default function HeroFloatingObjects({
         pos, depth, baseSize, sizeClass, blur,
         floatDuration, floatDelay,
         driftY, driftX, rotRange, opacity,
-        survivor, exitVector
+        survivor, exitVector, parallaxMultiplier
       };
     });
   }, [seed, count]);
@@ -236,11 +267,12 @@ export default function HeroFloatingObjects({
           mouseX={mouseX}
           mouseY={mouseY}
           isTouch={isTouch}
+          isMobile={isMobile}
           accent={accent}
           hsl={hsl}
           delay={delay}
           animateState={animateState}
-          isBrightened={brightenedIndex === i}
+          isBrightened={isMobile ? false : brightenedIndex === i}
         />
       ))}
     </div>
@@ -258,6 +290,7 @@ function FloatingObjectItem({
   mouseX,
   mouseY,
   isTouch,
+  isMobile = false,
   accent,
   hsl,
   delay,
@@ -267,9 +300,9 @@ function FloatingObjectItem({
   // Exit progress mapping (Movement starts at 0.0, ends at 0.85)
   const exitProgress = useTransform(sceneProgress, [0, 0.85], [0, 1]);
 
-  // exitOffset: survivor stays in place (x, y = 0), non-survivor travels off-screen
-  const exitX = useTransform(exitProgress, (p) => obj.survivor ? 0 : obj.exitVector.x * 1000 * p);
-  const exitY = useTransform(exitProgress, (p) => obj.survivor ? 0 : obj.exitVector.y * 1000 * p);
+  // exitOffset: survivor stays in place, non-survivor travels off-screen (disabled on mobile for perf)
+  const exitX = useTransform(exitProgress, (p) => isMobile ? 0 : (obj.survivor ? 0 : obj.exitVector.x * 1000 * p));
+  const exitY = useTransform(exitProgress, (p) => isMobile ? 0 : (obj.survivor ? 0 : obj.exitVector.y * 1000 * p));
 
   // Opacity timing: stays base until 0.45, goes to 0 (or lower survivor background level) by 0.85
   const scrollOpacity = useTransform(
@@ -278,8 +311,8 @@ function FloatingObjectItem({
     [obj.opacity, obj.opacity, obj.survivor ? obj.opacity * 0.45 : 0]
   );
 
-  // Parallax offsets (Depth layering)
-  const multiplier = 0.45 + obj.depth * 0.10;
+  // Parallax offsets (Depth layering) using refined parallaxMultiplier
+  const multiplier = obj.parallaxMultiplier;
   const px = isTouch ? 0 : mouseX * multiplier;
   const py = isTouch ? 0 : mouseY * multiplier;
 
@@ -322,16 +355,22 @@ function FloatingObjectItem({
         {/* Parallax and camera effects container */}
         <div
           style={{
-            transform: `translate(${px}px, ${py}px) rotate(${rotMouse}deg) scale(${scaleMouse})`,
+            transform: isMobile
+              ? 'none'
+              : `translate(${px}px, ${py}px) rotate(${rotMouse}deg) scale(${scaleMouse})`,
             willChange: 'transform',
-            filter: `
+            filter: isMobile
+              ? `opacity(${isBrightened ? 1 : 0.85})`
+              : `
               drop-shadow(${shadowX}px ${shadowY}px 8px rgba(0,0,0,0.05))
               drop-shadow(0 0 10px ${accent}${isBrightened ? '45' : '15'})
               hue-rotate(${hsl.h}deg) saturate(0.6)
               ${obj.blur > 0 ? `blur(${obj.blur}px)` : ''}
             `,
-            opacity: isBrightened ? 1.5 : 1.0, // Subtle opacity boost on active brightening
-            transition: 'filter 0.8s ease, opacity 1.2s ease',
+            opacity: isBrightened ? 1.5 : 1.0,
+            transition: isMobile
+              ? 'opacity 0.8s ease'
+              : 'filter 0.8s ease, opacity 1.2s ease',
           }}
         >
           {/* Floating idle animation loop */}

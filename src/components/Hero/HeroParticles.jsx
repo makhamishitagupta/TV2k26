@@ -10,12 +10,13 @@ export default function HeroParticles({
   mouseX = 0,
   mouseY = 0,
   isTouch = false,
+  isMobile = false,
   viewportTier = 'desktop',
   accent = '#ffffff',
   delay = 0.7,
   animateState = 'hidden',
 }) {
-  const counts = { desktop: 45, tablet: 25, mobile: 12 };
+  const counts = { desktop: 80, tablet: 45, mobile: 20 };
   const count = counts[viewportTier] || counts.desktop;
 
   const sceneProgress = useHeroScroll();
@@ -33,11 +34,16 @@ export default function HeroParticles({
     const generateSafeCoordinates = () => {
       let x, y;
       let attempts = 0;
+      const unsafeXMin = isMobile ? 14 : 20;
+      const unsafeXMax = isMobile ? 86 : 80;
+      const unsafeYMin = isMobile ? 12 : 18;
+      const unsafeYMax = isMobile ? 88 : 82;
+
       while (attempts < 150) {
         x = 2 + rand() * 96; // 2% to 98%
         y = 2 + rand() * 96; // 2% to 98%
-        const isInsideUnsafeX = x > 20 && x < 80;
-        const isInsideUnsafeY = y > 18 && y < 82;
+        const isInsideUnsafeX = x > unsafeXMin && x < unsafeXMax;
+        const isInsideUnsafeY = y > unsafeYMin && y < unsafeYMax;
         if (!(isInsideUnsafeX && isInsideUnsafeY)) {
           return { x, y };
         }
@@ -48,21 +54,53 @@ export default function HeroParticles({
 
     return Array.from({ length: count }, (_, i) => {
       const { x, y } = generateSafeCoordinates();
-      const size = 2.5 + rand() * 3.5; // 2.5–6.0px diameter
-      const opacity = 0.45 + rand() * 0.25; // 0.45-0.70 opacity
-      const depth = rand(); // 0 to 1 normalized depth
-      const floatDuration = 22 + rand() * 14; // slower, smoother drift
+      
+      const roll = rand();
+      let type, color, glow, size, opacity, glowSpread;
+      
+      if (roll < 0.70) {
+        // 70% Tiny warm-white ambient dust
+        type = 'dust';
+        size = 1.6 + rand() * 1.4; // 1.6px to 3.0px
+        opacity = 0.65 + rand() * 0.25; // 0.65 to 0.90
+        color = 'rgba(245, 235, 221, 0.95)'; // Warm Off-White
+        glow = 'rgba(245, 235, 221, 0.55)';
+        glowSpread = size * (isMobile ? 1.8 : 2.5);
+      } else if (roll < 0.90) {
+        // 20% Soft gold glowing particles
+        type = 'glow';
+        size = 3.2 + rand() * 1.8; // 3.2px to 5.0px
+        opacity = 0.75 + rand() * 0.20; // 0.75 to 0.95
+        color = 'rgba(255, 213, 145, 1.0)'; // Solid Soft Gold
+        glow = 'rgba(255, 213, 145, 0.75)';
+        glowSpread = size * (isMobile ? 2.5 : 3.5);
+      } else {
+        // 10% Small golden/burgundy spark particles
+        type = 'spark';
+        size = 2.5 + rand() * 1.5; // 2.5px to 4.0px
+        opacity = 0.85 + rand() * 0.15; // 0.85 to 1.00
+        // Rare Burgundy Accent (~35% of sparks) vs Amber (~65% of sparks)
+        if (rand() < 0.35) {
+          color = 'rgba(239, 68, 68, 1.0)'; // Solid Burgundy
+          glow = 'rgba(239, 68, 68, 0.80)';
+        } else {
+          color = 'rgba(245, 158, 11, 1.0)'; // Solid Amber/Gold
+          glow = 'rgba(245, 158, 11, 0.80)';
+        }
+        glowSpread = size * (isMobile ? 3.0 : 4.5);
+      }
+
+      const depth = rand();
+      const floatDuration = 18 + rand() * 10; // slow, smooth drift
       const floatDelay = rand() * 10;
       
-      const width = typeof window !== 'undefined' ? window.innerWidth : 1920;
-      const height = typeof window !== 'undefined' ? window.innerHeight : 1080;
-
-      const tx1 = Math.round(rand() * width - width / 2);
-      const ty1 = Math.round(rand() * height - height / 2);
-      const tx2 = Math.round(rand() * width - width / 2);
-      const ty2 = Math.round(rand() * height - height / 2);
-      const tx3 = Math.round(rand() * width - width / 2);
-      const ty3 = Math.round(rand() * height - height / 2);
+      // Tight local drift offsets (range -12px to 12px) to prevent excessive speed
+      const tx1 = rand() * 24 - 12;
+      const ty1 = rand() * 24 - 12;
+      const tx2 = rand() * 24 - 12;
+      const ty2 = rand() * 24 - 12;
+      const tx3 = rand() * 24 - 12;
+      const ty3 = rand() * 24 - 12;
 
       const survivor = rand() < 0.3; // Stable ~30% survivor flag
       const exitVector = {
@@ -70,28 +108,10 @@ export default function HeroParticles({
         y: rand() * 2.0 - 1.8, // range [-1.8, 0.2] (mostly upwards)
       };
 
-      // Warm floating palette: Off-White, Soft Gold, Amber, Burgundy Accent
-      const roll = rand();
-      let color = 'rgba(245, 235, 221, 0.50)';   // Warm Off-White (default)
-      let glow = 'rgba(245, 235, 221, 0.20)';
-      if (roll < 0.20) {
-        // Soft Gold (20%)
-        color = 'rgba(255, 213, 145, 0.45)';
-        glow = 'rgba(255, 213, 145, 0.20)';
-      } else if (roll < 0.32) {
-        // Amber (12%)
-        color = 'rgba(200, 120, 50, 0.40)';
-        glow = 'rgba(200, 120, 50, 0.18)';
-      } else if (roll < 0.38) {
-        // Burgundy Accent (6%)
-        color = 'rgba(138, 45, 36, 0.40)';
-        glow = 'rgba(138, 45, 36, 0.18)';
-      }
-
       return {
         x, y, size, opacity, depth, floatDuration, floatDelay,
         tx1, ty1, tx2, ty2, tx3, ty3,
-        survivor, exitVector, color, glow
+        survivor, exitVector, color, glow, glowSpread, type
       };
     });
   }, [seed, count]);
@@ -107,6 +127,7 @@ export default function HeroParticles({
           mouseX={mouseX}
           mouseY={mouseY}
           isTouch={isTouch}
+          isMobile={isMobile}
           accent={accent}
           delay={delay}
           animateState={animateState}
@@ -127,6 +148,7 @@ function ParticleItem({
   mouseX,
   mouseY,
   isTouch,
+  isMobile = false,
   accent,
   delay,
   animateState
@@ -136,14 +158,15 @@ function ParticleItem({
   // Exit progress mapping (starts at 0.0, ends at 0.85)
   const exitProgress = useTransform(sceneProgress, [0, 0.85], [0, 1]);
 
-  const exitX = useTransform(exitProgress, (v) => p.survivor ? 0 : p.exitVector.x * 600 * v);
-  const exitY = useTransform(exitProgress, (v) => p.survivor ? 0 : p.exitVector.y * 1000 * v);
+  // On mobile: skip exit displacement for performance — particles just fade out
+  const exitX = useTransform(exitProgress, (v) => isMobile ? 0 : (p.survivor ? 0 : p.exitVector.x * 600 * v));
+  const exitY = useTransform(exitProgress, (v) => isMobile ? 0 : (p.survivor ? 0 : p.exitVector.y * 1000 * v));
 
-  // Opacity: fades from base to 0 (or survivor lower background level) from 0.45 to 0.85
+  // Opacity: fades from base to 0 (or survivor lower background level) from 0.15 to 0.40
   const scrollOpacity = useTransform(
     sceneProgress,
-    [0, 0.45, 0.85],
-    [p.opacity, p.opacity, p.survivor ? p.opacity * 0.45 : 0]
+    [0, 0.15, 0.40],
+    [p.opacity, p.opacity, p.survivor ? p.opacity * 0.10 : 0]
   );
 
   // Parallax offsets
@@ -163,16 +186,20 @@ function ParticleItem({
     }),
   };
 
-  // Gentle cursor repulsion logic running inside animation frame loop (ultra high performance)
+  // Gentle cursor repulsion logic — disabled on mobile/touch for performance
   useAnimationFrame(() => {
-    if (!elRef.current || isTouch) return;
+    if (!elRef.current || isTouch || isMobile) return;
     const mx = window.__tv_raw_mx;
     const my = window.__tv_raw_my;
     if (mx === undefined || my === undefined) return;
 
-    const rect = elRef.current.getBoundingClientRect();
-    const pxCenter = rect.left + rect.width / 2;
-    const pyCenter = rect.top + rect.height / 2;
+    const winW = window.innerWidth;
+    const winH = window.innerHeight;
+    const ex = p.survivor ? 0 : exitX.get();
+    const ey = p.survivor ? 0 : exitY.get();
+
+    const pxCenter = (p.x / 100) * winW + px + ex;
+    const pyCenter = (p.y / 100) * winH + py + ey;
 
     const dx = pxCenter - mx;
     const dy = pyCenter - my;
@@ -180,10 +207,10 @@ function ParticleItem({
 
     let rx = 0;
     let ry = 0;
-    const threshold = 110; // Active mouse distance threshold (pixels)
+    const threshold = 110;
     if (dist < threshold && dist > 0.1) {
       const force = (threshold - dist) / threshold;
-      const push = force * 12; // Gentle repulsion offset up to 12 pixels
+      const push = force * 12;
       rx = (dx / dist) * push;
       ry = (dy / dist) * push;
     }
@@ -210,30 +237,29 @@ function ParticleItem({
         custom={{ opacity: 1.0, delay: delay + index * 0.03 }}
         initial="hidden"
         animate={animateState}
-        className="w-full h-full rounded-full"
-        style={{
-          backgroundColor: p.color,
-          boxShadow: `0 0 ${p.size * 2}px ${p.glow}`,
-          willChange: 'opacity',
-          transition: 'background-color 0.8s ease, box-shadow 0.8s ease',
-        }}
+        className="w-full h-full"
       >
-        {/* Parallax and floating container */}
+        {/* Parallax and repulsion wrapper */}
         <div
           ref={elRef}
           style={{
             transform: `translate(calc(${px}px + var(--repulsion-x, 0px)), calc(${py}px + var(--repulsion-y, 0px)))`,
             willChange: 'transform',
-            transition: 'transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1)', // Smooth return physics
+            transition: 'transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1)',
           }}
           className="w-full h-full"
         >
+          {/* Drifting and Twinkling Visible Dot (Corrected background color and shadow mapping) */}
           <motion.div
             animate={{
               x: [0, p.tx1, p.tx2, p.tx3, 0],
               y: [0, p.ty1, p.ty2, p.ty3, 0],
-              scale: [1, 1.35, 0.75, 1.2, 1],
-              opacity: [0.45, 1.0, 0.35, 0.9, 0.45],
+              opacity: p.type === 'spark'
+                ? [0.55, 1.0, 0.35, 0.95, 0.55]
+                : [0.80, 1.0, 0.75, 1.0, 0.80],
+              scale: p.type === 'spark'
+                ? [1, 1.25, 0.75, 1.15, 1]
+                : [1, 1.05, 0.95, 1.05, 1]
             }}
             transition={{
               duration: p.floatDuration,
@@ -242,6 +268,11 @@ function ParticleItem({
               ease: 'easeInOut',
             }}
             className="w-full h-full rounded-full"
+            style={{
+              backgroundColor: p.color,
+              boxShadow: `0 0 ${p.glowSpread}px ${p.glow}`,
+              willChange: 'transform, opacity',
+            }}
           />
         </div>
       </motion.div>

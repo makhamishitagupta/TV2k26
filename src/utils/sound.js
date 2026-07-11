@@ -45,7 +45,7 @@ export const playTactileSound = (type = 'click') => {
 
   try {
     if (type === 'tick') {
-      // High, crisp tick for minor navigation links and hovers
+      // High, crisp tick for minor navigation links and hovers (added attack ramp to prevent pop)
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
@@ -53,13 +53,14 @@ export const playTactileSound = (type = 'click') => {
       
       osc.type = 'sine';
       osc.frequency.setValueAtTime(1000, ctx.currentTime);
-      gain.gain.setValueAtTime(0.5, ctx.currentTime); // Louder peak
-      gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.06); // Linear decay is louder than exponential
+      gain.gain.setValueAtTime(0.01, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 0.003); // Soft 3ms attack
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06); // Exponential decay
       
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.06);
     } else if (type === 'clack') {
-      // Hollow, woody snap sound for selectors and close buttons
+      // Hollow, woody snap sound for selectors and close buttons (added attack ramp to prevent pop)
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
@@ -67,25 +68,27 @@ export const playTactileSound = (type = 'click') => {
       
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(650, ctx.currentTime);
-      gain.gain.setValueAtTime(0.8, ctx.currentTime); // High volume clack
-      gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.01, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.20, ctx.currentTime + 0.004); // Soft 4ms attack
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08); // Exponential decay
       
       osc.start(ctx.currentTime);
       osc.stop(ctx.currentTime + 0.08);
     } else {
-      // Solid mechanical click for primary buttons and form submits
+      // Solid mechanical click for primary buttons (added 5ms attack ramp to smooth click thud)
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.connect(gain);
       gain.connect(ctx.destination);
       
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(400, ctx.currentTime);
-      gain.gain.setValueAtTime(1.0, ctx.currentTime); // Max volume click
-      gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+      osc.frequency.setValueAtTime(550, ctx.currentTime); // Pitch adjusted slightly higher for clean feedback
+      gain.gain.setValueAtTime(0.01, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.005); // Smooth 5ms attack
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12); // Smooth exponential decay
       
       osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.08);
+      osc.stop(ctx.currentTime + 0.12);
     }
   } catch (e) {
     console.error("🔊 [playTactileSound] Error inside synthesizer:", e);
