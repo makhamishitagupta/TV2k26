@@ -8,7 +8,6 @@ const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/TV2k26/',
   plugins: [react()],
   resolve: {
     alias: {
