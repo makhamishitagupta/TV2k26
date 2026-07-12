@@ -15,21 +15,50 @@ const STATS = [
 ];
 
 function MobileAmbientBackground() {
-  const particles = useMemo(() => {
-    const items = [];
-    for (let i = 0; i < 28; i++) {
-      items.push({
-        id: i,
+  const backgroundElements = useMemo(() => {
+    const particles = [];
+    const stars = [];
+    const embers = [];
+
+    // Slow-moving dust/glowing particles (22 items)
+    for (let i = 0; i < 22; i++) {
+      particles.push({
+        id: `p-${i}`,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: 1 + Math.random() * 2.2,
-        delay: Math.random() * 8,
-        duration: 18 + Math.random() * 14,
-        opacity: 0.15 + Math.random() * 0.45,
+        size: 1 + Math.random() * 2,
+        delay: Math.random() * -10, // Start animation in past so it starts immediately
+        duration: 20 + Math.random() * 14,
+        opacity: 0.15 + Math.random() * 0.4,
         isGold: Math.random() > 0.65,
       });
     }
-    return items;
+
+    // Twinkling stars (14 items)
+    for (let i = 0; i < 14; i++) {
+      stars.push({
+        id: `s-${i}`,
+        x: Math.random() * 100,
+        y: Math.random() * 85, // concentrate higher up
+        size: 0.8 + Math.random() * 1.5,
+        delay: Math.random() * -5,
+        duration: 3 + Math.random() * 4,
+      });
+    }
+
+    // Upward drifting embers (14 items)
+    for (let i = 0; i < 14; i++) {
+      embers.push({
+        id: `e-${i}`,
+        x: Math.random() * 100,
+        y: 75 + Math.random() * 25, // start near bottom
+        size: 1.5 + Math.random() * 2.5,
+        delay: Math.random() * -15,
+        duration: 8 + Math.random() * 8,
+      });
+    }
+
+    return { particles, stars, embers };
   }, []);
 
   const streaks = useMemo(
@@ -37,8 +66,8 @@ function MobileAmbientBackground() {
       Array.from({ length: 4 }, (_, i) => ({
         id: i,
         top: 12 + i * 22,
-        delay: i * 2.5,
-        duration: 14 + i * 3,
+        delay: i * -3, // Start in past
+        duration: 16 + i * 4,
       })),
     []
   );
@@ -48,11 +77,46 @@ function MobileAmbientBackground() {
       className="opening-mobile-ambient pointer-events-none absolute inset-0 overflow-hidden"
       aria-hidden="true"
     >
+      <div className="opening-mobile-vignette" />
+      <div className="opening-mobile-circuit-grid" />
       <div className="opening-mobile-ambient__glow" />
       <div className="opening-mobile-ambient__radial opening-mobile-ambient__radial--top" />
       <div className="opening-mobile-ambient__radial opening-mobile-ambient__radial--bottom" />
 
-      {particles.map((p) => (
+      {/* Twinkling Stars */}
+      {backgroundElements.stars.map((star) => (
+        <span
+          key={star.id}
+          className="opening-mobile-ambient__star"
+          style={{
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            width: star.size,
+            height: star.size,
+            animationDelay: `${star.delay}s`,
+            animationDuration: `${star.duration}s`,
+          }}
+        />
+      ))}
+
+      {/* Floating Embers */}
+      {backgroundElements.embers.map((ember) => (
+        <span
+          key={ember.id}
+          className="opening-mobile-ambient__ember"
+          style={{
+            left: `${ember.x}%`,
+            top: `${ember.y}%`,
+            width: ember.size,
+            height: ember.size,
+            animationDelay: `${ember.delay}s`,
+            animationDuration: `${ember.duration}s`,
+          }}
+        />
+      ))}
+
+      {/* Glowing Dust Particles */}
+      {backgroundElements.particles.map((p) => (
         <span
           key={p.id}
           className={`opening-mobile-ambient__particle ${p.isGold ? "opening-mobile-ambient__particle--gold" : ""}`}
@@ -68,6 +132,7 @@ function MobileAmbientBackground() {
         />
       ))}
 
+      {/* Streak details */}
       {streaks.map((s) => (
         <span
           key={s.id}
@@ -87,11 +152,20 @@ function StatCard({ stat, index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, scale: 0.96 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y: [0, -3, 0],
+      }}
       transition={{
-        duration: 0.55,
-        delay: 0.85 + index * 0.1,
-        ease: GOLDEN_EASE,
+        opacity: { duration: 0.55, delay: 0.85 + index * 0.1, ease: GOLDEN_EASE },
+        scale: { duration: 0.55, delay: 0.85 + index * 0.1, ease: GOLDEN_EASE },
+        y: {
+          duration: 4.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1.25 + index * 0.15,
+        },
       }}
       whileTap={{ scale: 0.98 }}
       className="opening-mobile-stat group"
@@ -116,7 +190,7 @@ export default function OpeningMobileHero({ onEnter, isEntered = false }) {
   return (
     <section
       id="hero"
-      className="opening-mobile-hero relative flex h-[100svh] w-full flex-col overflow-hidden select-none md:hidden"
+      className="opening-mobile-hero relative flex h-[100svh] w-full flex-col overflow-hidden select-none lg:hidden"
     >
       <MobileAmbientBackground />
 
@@ -132,10 +206,20 @@ export default function OpeningMobileHero({ onEnter, isEntered = false }) {
           <span>18th Edition</span>
           <span className="opening-mobile-badge__sep">•</span>
           <span>Since 2006</span>
+          <motion.div
+            className="opening-mobile-badge__shimmer"
+            animate={{ x: ["-150%", "250%"] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatDelay: 4.5,
+              ease: "easeInOut",
+            }}
+          />
         </motion.div>
 
         {/* Center stack: Logo → Tagline → CTA → Stats */}
-        <div className="flex w-full max-w-[420px] flex-1 flex-col items-center justify-center gap-3 sm:gap-3.5">
+        <div className="flex w-full max-w-[420px] md:max-w-[700px] flex-1 flex-col items-center justify-center gap-3 sm:gap-3.5 md:gap-6">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, filter: "blur(12px)" }}
@@ -149,7 +233,10 @@ export default function OpeningMobileHero({ onEnter, isEntered = false }) {
               className="opening-mobile-logo-wrap__aura absolute inset-0 -z-10 rounded-2xl"
             />
             <motion.div
-              animate={{ y: [0, -5, 0] }}
+              animate={{
+                y: [0, -5, 0],
+                rotate: [0, 0.6, -0.6, 0]
+              }}
               transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
               className="opening-mobile-logo-wrap__panel"
             >
@@ -180,30 +267,31 @@ export default function OpeningMobileHero({ onEnter, isEntered = false }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{
                 type: "spring",
-                stiffness: 260,
-                damping: 22,
+                stiffness: 140,
+                damping: 20,
                 delay: 0.5,
               }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.96 }}
               className="opening-mobile-cta group relative mt-0.5 shrink-0"
             >
               <span className="relative z-10">Enter Command Grid</span>
               <motion.span
                 aria-hidden="true"
                 className="opening-mobile-cta__sweep absolute inset-0 pointer-events-none"
-                animate={{ x: ["-160%", "160%"] }}
+                animate={{ x: ["-180%", "180%"] }}
                 transition={{
-                  duration: 1.1,
+                  duration: 1.3,
                   repeat: Infinity,
-                  repeatDelay: 3.5,
-                  ease: [0.19, 1, 0.22, 1],
+                  repeatDelay: 4.2,
+                  ease: [0.16, 1, 0.3, 1],
                 }}
               />
               <span aria-hidden="true" className="opening-mobile-cta__glow" />
             </motion.button>
           )}
 
-          {/* Statistics 2×2 */}
+          {/* Statistics 2×2 on Mobile, 4x1 on Tablet */}
           <div className="opening-mobile-stats mt-1 w-full max-w-[min(92vw,360px)]">
             {STATS.map((stat, i) => (
               <StatCard key={stat.label} stat={stat} index={i} />
@@ -212,7 +300,7 @@ export default function OpeningMobileHero({ onEnter, isEntered = false }) {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.35, ease: GOLDEN_EASE }}
@@ -240,7 +328,7 @@ export default function OpeningMobileHero({ onEnter, isEntered = false }) {
           >
             <path d="M1 1L5 5L9 1" />
           </motion.svg>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

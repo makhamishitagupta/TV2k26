@@ -11,7 +11,7 @@ export default function Hero({ onEnter, isEntered = false }) {
 
     <section
       id="hero-desktop"
-      className="relative min-h-full w-full hidden md:flex flex-col justify-center py-8 lg:py-4 select-none"
+      className="relative min-h-full w-full hidden lg:flex flex-col justify-center py-8 lg:py-4 select-none"
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
         

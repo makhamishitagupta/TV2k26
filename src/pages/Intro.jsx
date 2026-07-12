@@ -108,8 +108,8 @@ export default function Intro() {
                     }
                     transition={{
                       type: "spring",
-                      stiffness: 150,
-                      damping: 10,
+                      stiffness: 120,
+                      damping: 18,
                     }}
                     className="text-[#d9040b] drop-shadow-[0_0_35px_rgba(217,4,11,0.85)] inline-block select-none text-glow-red"
                   >
